@@ -80,11 +80,12 @@ tokenize_to_df(txt, mode = "C")
 ```{r}
 form("東京都へ行く", mode = "B", type = "dictionary")
 
-form("国家公務員はかつ丼を食べたい", mode = "C", type = "normalized")
+form("国家公務員はかつ丼を食べたい", mode = "C", type = "normalized", pos = TRUE)
 
-form(txt, mode = "A", type = "dictionary")
+form(txt, mode = "A", type = "dictionary", pos = FALSE)
+
+form("メロスは激怒した", mode = "A", type = "normalized", pos = FALSE)
+form("メロスは激怒した", mode = "A", type = "dictionary", pos = FALSE)
+form("メロスは激怒した", mode = "A", type = "reading", pos = FALSE)
+form("メロスは激怒した", mode = "A", type = "part_of_speech", pos = FALSE)
 ```
-
-
-
-

@@ -4,14 +4,17 @@
 \alias{form}
 \title{Parse tokenized input text}
 \usage{
-form(x, mode, type)
+form(x, mode, type, pos = TRUE)
 }
 \arguments{
 \item{x}{Input text vectors}
 
 \item{mode}{Select split mode (A, B, C)}
 
-\item{type}{return form. "dictionary" or "normalized".}
+\item{type}{return form. One of the following "surface", "dictionary",
+"normalized", "reading" or "part_of_speech".}
+
+\item{pos}{Include part of speech information with object name.}
 }
 \description{
 Parse tokenized input text
