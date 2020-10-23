@@ -1,0 +1,90 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# sudachir
+
+SudachiR is a R version of [Sudachi](https://github.com/WorksApplications/Sudachi), a Japanese morphological analyzer.
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+## Installation
+
+This package is not yet on CRAN, but can be installed from GitHub with:
+
+
+``` r
+if (!requireNamespace("remotes"))
+  install.packages("remotes")
+
+remotes::install_github("uribo/sudachir")
+```
+
+## Usage
+
+```{r}
+library(reticulate)
+library(sudachir)
+```
+
+### Setup r-sudachipy environment
+
+``` r
+install_sudachipy()
+```
+
+```{r}
+use_condaenv(condaenv = "r-sudachipy", required = TRUE)
+```
+
+### Tokenize
+
+```{r}
+m <- 
+  tokenizer("高輪ゲートウェイ駅", mode = "A")
+
+for (i in seq_len(py_len(m[[1]])) - 1) {
+  print(m[[1]][i])
+}
+
+m <- 
+  tokenizer("高輪ゲートウェイ駅", mode = "C")
+
+for (i in seq_len(py_len(m[[1]])) - 1) {
+  print(m[[1]][i])
+}
+```
+
+
+```{r}
+txt <- c("国家公務員はかつ丼を食べたい", 
+         "メロスは激怒した。",
+         "吾輩は猫である。")
+
+tokenize_to_df(txt, mode = "C")
+```
+
+
+```{r}
+form("東京都へ行く", mode = "B", type = "dictionary")
+
+form("国家公務員はかつ丼を食べたい", mode = "C", type = "normalized")
+
+form(txt, mode = "A", type = "dictionary")
+```
+
+
+
+
