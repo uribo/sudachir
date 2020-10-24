@@ -37,6 +37,12 @@ install_sudachipy <- function() {
   reticulate::conda_install(envname = "r-sudachipy",
                             packages = sudachipy_version,
                             pip = TRUE)
+  cat(cli::col_green('\nInstallation complete.\n'),
+      cli::col_grey('Restarte to R, activate environment with `',
+                    cli::style_bold('reticulate::use_condaenv(condaenv = "r-sudachipy", required = TRUE)')))
+  if (rstudioapi::hasFun("restartSession"))
+    rstudioapi::restartSession()
+  invisible(NULL)
 }
 
 #' Remove SudachiPy

@@ -29,3 +29,6 @@ Imports:
 LazyData: true
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
+Suggests: 
+    rstudioapi,
+    testthat
