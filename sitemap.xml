@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://uribo.github.io/sudachir/index.html</loc>
+  </url>
+  <url>
+    <loc>https://uribo.github.io/sudachir/reference/create_sudachipy_env.html</loc>
+  </url>
+  <url>
+    <loc>https://uribo.github.io/sudachir/reference/form.html</loc>
+  </url>
+  <url>
+    <loc>https://uribo.github.io/sudachir/reference/install_sudachipy.html</loc>
+  </url>
+  <url>
+    <loc>https://uribo.github.io/sudachir/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://uribo.github.io/sudachir/reference/remove_sudachipy.html</loc>
+  </url>
+  <url>
+    <loc>https://uribo.github.io/sudachir/reference/tokenize_to_df.html</loc>
+  </url>
+  <url>
+    <loc>https://uribo.github.io/sudachir/reference/tokenizer.html</loc>
+  </url>
+</urlset>
