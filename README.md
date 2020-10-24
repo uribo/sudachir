@@ -1,13 +1,20 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# sudachir
+# sudachir <a href='https://https://uribo.github.io/sudachir/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 SudachiR is a R version of
 [Sudachi](https://github.com/WorksApplications/Sudachi), a Japanese
 morphological analyzer.
 
 <!-- badges: start -->
+
+[![CRAN
+status](https://www.r-pkg.org/badges/version/sudachir)](https://CRAN.R-project.org/package=sudachir)
+[![R build
+status](https://github.com/uribo/sudachir/workflows/R-CMD-check/badge.svg)](https://github.com/uribo/sudachir/actions)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 ## Installation
