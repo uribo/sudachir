@@ -1,0 +1,28 @@
+url: https://uribo.github.io/sudachir
+
+authors:
+  Shinya Uryu:
+    href: https://suryu.me
+
+templates:
+  params:
+    bootswatch: paper
+
+navbar:
+  type: default
+  left:
+  - icon: fa-home fa-lg
+    href: index.html
+  - text: Reference
+    href: reference/index.html
+  - text: News
+    href: news/index.html
+
+reference:
+  - title: "Sudachi tokenizer"
+    contents:
+    - tokenizer
+    - tokenize_to_df
+  - title: "Parse tokenized input text"
+    contents:
+    - form
