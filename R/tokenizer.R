@@ -1,20 +1,44 @@
+#' @noRd
+.tokenizer <- (function() {
+  if (!exists("instance")) instance <- NULL
+  function(obj = NULL) {
+    if (!is.null(obj)) instance <<- obj
+    return(instance)
+  }
+})()
+
+#' Rebuild tokenizer
+#'
+#' @param config_path Absolute path to `sudachi.json`
+#' @return Returns a binding to the instance of `<sudachipy.tokenizer.Tokenizer>` invisibly
+#' @export
+rebuild_tokenizer <- function(config_path = NULL) {
+  dictionary <- reticulate::import("sudachipy.dictionary")
+  if (!is.null(config_path)) {
+    .tokenizer(dictionary$Dictionary()$create(config_path = file.path(config_path)))
+  } else {
+    .tokenizer(dictionary$Dictionary()$create())
+  }
+  return(invisible(.tokenizer()))
+}
+
 #' Sudachi tokenizer
 #'
 #' @param x Input text vectors
 #' @param mode Select split mode (A, B, C)
 #' @export
 tokenizer <- function(x, mode) {
-  tokenizer <- reticulate::import("sudachipy.tokenizer")
-  dictionary <- reticulate::import("sudachipy.dictionary")
-  tokenizer_obj <- dictionary$Dictionary()$create()
+  if (is.null(.tokenizer())) {
+    rebuild_tokenizer()
+  }
   mode <-
     switch (mode,
-            "A" = tokenizer$Tokenizer$SplitMode$A,
-            "B" = tokenizer$Tokenizer$SplitMode$B,
-            "C" = tokenizer$Tokenizer$SplitMode$C)
+            "A" = .tokenizer()$SplitMode$A,
+            "B" = .tokenizer()$SplitMode$B,
+            "C" = .tokenizer()$SplitMode$C)
   res <-
     purrr::map(x,
-               ~ tokenizer_vector(.x, mode, tokenizer_obj))
+               ~ tokenizer_vector(.x, mode, .tokenizer()))
   purrr::map(
     res,
     ~ cat(cli::col_cyan(
