@@ -7,7 +7,10 @@ Authors@R: c(
            family = "Uryu",
            role = c("aut", "cre"),
            email = "suika1127@gmail.com",
-           comment = c(ORCID = "0000-0002-0493-6186")))
+           comment = c(ORCID = "0000-0002-0493-6186")),
+    person(given = "Akiru",
+           family = "Kato",
+           role = "aut"))
 Maintainer: Shinya Uryu <suika1127@gmail.com>
 Description: Interface to 'Sudachi' <https://github.com/WorksApplications/Sudachi>,
     a Japanese morphological analyzer. This is a port of what is available in Python.
