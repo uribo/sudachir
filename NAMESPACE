@@ -3,6 +3,7 @@
 export("%>%")
 export(form)
 export(install_sudachipy)
+export(rebuild_tokenizer)
 export(remove_sudachipy)
 export(tokenize_to_df)
 export(tokenizer)
