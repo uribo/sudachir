@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parse tokenized input text — form • sudachir</title>
+<title>Rebuild tokenizer — rebuild_tokenizer • sudachir</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Parse tokenized input text — form" />
-<meta property="og:description" content="Parse tokenized input text" />
+<meta property="og:title" content="Rebuild tokenizer — rebuild_tokenizer" />
+<meta property="og:description" content="Rebuild tokenizer" />
 <meta property="og:image" content="https://uribo.github.io/sudachir/logo.png" />
 
 
@@ -119,39 +119,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parse tokenized input text</h1>
-    <small class="dont-index">Source: <a href='https://github.com/uribo/sudachir/blob/master/R/form.R'><code>R/form.R</code></a></small>
-    <div class="hidden name"><code>form.Rd</code></div>
+    <h1>Rebuild tokenizer</h1>
+    <small class="dont-index">Source: <a href='https://github.com/uribo/sudachir/blob/master/R/tokenizer.R'><code>R/tokenizer.R</code></a></small>
+    <div class="hidden name"><code>rebuild_tokenizer.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Parse tokenized input text</p>
+    <p>Rebuild tokenizer</p>
     </div>
 
-    <pre class="usage"><span class='fu'>form</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>mode</span>, <span class='va'>type</span>, pos <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>rebuild_tokenizer</span><span class='op'>(</span>config_path <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>Input text vectors</p></td>
-    </tr>
-    <tr>
-      <th>mode</th>
-      <td><p>Select split mode (A, B, C)</p></td>
-    </tr>
-    <tr>
-      <th>type</th>
-      <td><p>return form. One of the following "surface", "dictionary",
-"normalized", "reading" or "part_of_speech".</p></td>
-    </tr>
-    <tr>
-      <th>pos</th>
-      <td><p>Include part of speech information with object name.</p></td>
+      <th>config_path</th>
+      <td><p>Absolute path to <code>sudachi.json</code></p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Returns a binding to the instance of <code>&lt;sudachipy.tokenizer.Tokenizer&gt;</code> invisibly</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
