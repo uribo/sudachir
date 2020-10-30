@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# sudachir <a href='https://https://uribo.github.io/sudachir/'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# sudachir <a href='https://uribo.github.io/sudachir/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 SudachiR is a R version of
 [Sudachi](https://github.com/WorksApplications/Sudachi), a Japanese
