@@ -9,3 +9,4 @@
 ^docs$
 ^pkgdown$
 ^Makevars$
+^cran-comments\.md$
