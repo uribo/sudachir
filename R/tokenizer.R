@@ -1,44 +1,44 @@
-#' @noRd
-.tokenizer <- (function() {
-  if (!exists("instance")) instance <- NULL
-  function(obj = NULL) {
-    if (!is.null(obj)) instance <<- obj
-    return(instance)
-  }
-})()
-
 #' Rebuild tokenizer
 #'
 #' @param config_path Absolute path to `sudachi.json`
-#' @return Returns a binding to the instance of `<sudachipy.tokenizer.Tokenizer>` invisibly
+#' @return Returns a binding to the instance of `<sudachipy.tokenizer.Tokenizer>`.
 #' @export
 rebuild_tokenizer <- function(config_path = NULL) {
   dictionary <- reticulate::import("sudachipy.dictionary")
   if (!is.null(config_path)) {
-    .tokenizer(dictionary$Dictionary()$create(config_path = file.path(config_path)))
+    dictionary$Dictionary()$create(config_path = file.path(config_path))
   } else {
-    .tokenizer(dictionary$Dictionary()$create())
+    dictionary$Dictionary()$create()
   }
-  return(invisible(.tokenizer()))
 }
 
 #' Sudachi tokenizer
 #'
 #' @param x Input text vectors
 #' @param mode Select split mode (A, B, C)
+#' @param instance This is optional if you already have an instance of
+#' `<sudachipy.tokenizer.Tokenizer>` Giving them a predefined
+#' instance will speed up their execution.
 #' @export
-tokenizer <- function(x, mode) {
-  if (is.null(.tokenizer())) {
-    rebuild_tokenizer()
+tokenizer <- function(x, mode, instance = NULL) {
+  if (is.null(instance)) {
+    instance <-
+      rebuild_tokenizer()
+  } else {
+    if (!identical(class(instance),
+                  c("sudachipy.tokenizer.Tokenizer", "python.builtin.object")))
+      rlang::abort(paste0("Please, set ",
+                          cli::style_bold("<sudachipy.tokenizer.Tokenizer>"),
+                          "class object"))
   }
   mode <-
     switch (mode,
-            "A" = .tokenizer()$SplitMode$A,
-            "B" = .tokenizer()$SplitMode$B,
-            "C" = .tokenizer()$SplitMode$C)
+            "A" = instance$SplitMode$A,
+            "B" = instance$SplitMode$B,
+            "C" = instance$SplitMode$C)
   res <-
     purrr::map(x,
-               ~ tokenizer_vector(.x, mode, .tokenizer()))
+               ~ instance$tokenize(.x, mode))
   purrr::map(
     res,
     ~ cat(cli::col_cyan(
@@ -50,17 +50,13 @@ tokenizer <- function(x, mode) {
   res
 }
 
-tokenizer_vector <- function(x, mode, tokenizer_obj) {
-  tokenizer_obj$tokenize(x, mode)
-}
-
 #' Create tokenizing data.frame using Sudachi
 #'
 #' @inheritParams tokenizer
 #' @export
-tokenize_to_df <- function(x, mode) {
+tokenize_to_df <- function(x, mode, instance = NULL) {
   purrr::map_dfr(
-    tokenizer(x, mode = mode),
+    tokenizer(x, mode = mode, instance = instance),
     ~ tokenize_to_df_vec(.x),
     .id = "id")
 }
@@ -71,23 +67,18 @@ tokenize_to_df_vec <- function(m) {
                      tibble::tibble(surface = m[. - 1]$surface(),
                                     dic_form = m[. - 1]$dictionary_form(),
                                     normalized_form = m[. - 1]$normalized_form(),
-                                    reading = m[. - 1]$reading_form()
-                                    #,
-                                    #part_of_speech = m[. - 1]$part_of_speech()
-                     )),
+                                    reading = m[. - 1]$reading_form())),
     purrr::map_dfr(
       seq.int(reticulate::py_len(m)),
-      ~ tibble::as_tibble(
-        purrr::set_names(
-          as.data.frame(
-            t(
-              data.frame(x = m[.x - 1]$part_of_speech()))),
-              c(paste0(intToUtf8(c(21697, 35422)),
-                       seq_len(4)),
-                intToUtf8(c(27963, 29992, 22411)),
-                intToUtf8(c(27963, 29992, 24418))))) %>%
-        dplyr::mutate(dplyr::across(tidyselect::everything(),
-                                    .fns = dplyr::na_if,
-                                    y = "*"))))
+      ~ purrr::map_dfr(purrr::set_names(
+        as.data.frame(
+          t(
+            data.frame(x = m[.x - 1]$part_of_speech()))),
+        c(paste0(intToUtf8(c(21697, 35422)),
+                 seq_len(4)),
+          intToUtf8(c(27963, 29992, 22411)),
+          intToUtf8(c(27963, 29992, 24418)))),
+        dplyr::na_if,
+        y = "*")))
 }
 

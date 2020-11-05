@@ -10,7 +10,7 @@ rebuild_tokenizer(config_path = NULL)
 \item{config_path}{Absolute path to \code{sudachi.json}}
 }
 \value{
-Returns a binding to the instance of \verb{<sudachipy.tokenizer.Tokenizer>} invisibly
+Returns a binding to the instance of \verb{<sudachipy.tokenizer.Tokenizer>}.
 }
 \description{
 Rebuild tokenizer

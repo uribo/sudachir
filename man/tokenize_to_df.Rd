@@ -4,12 +4,16 @@
 \alias{tokenize_to_df}
 \title{Create tokenizing data.frame using Sudachi}
 \usage{
-tokenize_to_df(x, mode)
+tokenize_to_df(x, mode, instance = NULL)
 }
 \arguments{
 \item{x}{Input text vectors}
 
 \item{mode}{Select split mode (A, B, C)}
+
+\item{instance}{This is optional if you already have an instance of
+\verb{<sudachipy.tokenizer.Tokenizer>} Giving them a predefined
+instance will speed up their execution.}
 }
 \description{
 Create tokenizing data.frame using Sudachi
