@@ -19,3 +19,10 @@ form(x, mode, type, pos = TRUE)
 \description{
 Parse tokenized input text
 }
+\examples{
+\dontrun{
+form("Tokyo", mode = "B", type = "normalized")
+form("Osaka", mode = "B", type = "surface")
+form("Hokkaido", mode = "C", type = "part_of_speech")
+}
+}

@@ -15,3 +15,9 @@ Returns a binding to the instance of \verb{<sudachipy.tokenizer.Tokenizer>}.
 \description{
 Rebuild tokenizer
 }
+\examples{
+\dontrun{
+instance <- rebuild_tokenizer()
+tokenizer("Tokyo, Japan", mode = "A", instance)
+}
+}

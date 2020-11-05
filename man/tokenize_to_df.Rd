@@ -18,3 +18,8 @@ instance will speed up their execution.}
 \description{
 Create tokenizing data.frame using Sudachi
 }
+\examples{
+\dontrun{
+tokenizer("Tokyo, Japan", mode = "A")
+}
+}

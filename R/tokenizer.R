@@ -2,6 +2,11 @@
 #'
 #' @param config_path Absolute path to `sudachi.json`
 #' @return Returns a binding to the instance of `<sudachipy.tokenizer.Tokenizer>`.
+#' @examples
+#' \dontrun{
+#' instance <- rebuild_tokenizer()
+#' tokenizer("Tokyo, Japan", mode = "A", instance)
+#' }
 #' @export
 rebuild_tokenizer <- function(config_path = NULL) {
   dictionary <- reticulate::import("sudachipy.dictionary")
@@ -19,6 +24,10 @@ rebuild_tokenizer <- function(config_path = NULL) {
 #' @param instance This is optional if you already have an instance of
 #' `<sudachipy.tokenizer.Tokenizer>` Giving them a predefined
 #' instance will speed up their execution.
+#' @examples
+#' \dontrun{
+#' tokenizer("Tokyo, Japan", mode = "A")
+#' }
 #' @export
 tokenizer <- function(x, mode, instance = NULL) {
   if (is.null(instance)) {
@@ -53,6 +62,10 @@ tokenizer <- function(x, mode, instance = NULL) {
 #' Create tokenizing data.frame using Sudachi
 #'
 #' @inheritParams tokenizer
+#' @examples
+#' \dontrun{
+#' tokenizer("Tokyo, Japan", mode = "A")
+#' }
 #' @export
 tokenize_to_df <- function(x, mode, instance = NULL) {
   purrr::map_dfr(
@@ -81,4 +94,3 @@ tokenize_to_df_vec <- function(m) {
         dplyr::na_if,
         y = "*")))
 }
-

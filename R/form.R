@@ -4,6 +4,12 @@
 #' @param type return form. One of the following "surface", "dictionary",
 #' "normalized", "reading" or "part_of_speech".
 #' @param pos Include part of speech information with object name.
+#' @examples
+#' \dontrun{
+#' form("Tokyo", mode = "B", type = "normalized")
+#' form("Osaka", mode = "B", type = "surface")
+#' form("Hokkaido", mode = "C", type = "part_of_speech")
+#' }
 #' @export
 form <- function(x, mode, type, pos = TRUE) {
   type <-
