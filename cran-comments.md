@@ -7,4 +7,6 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a new release.
+* This is a new and comment fixed release.
+* Do not modify the global environment in function.
+* Add small executable examples for export functions.
