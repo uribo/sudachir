@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">sudachir</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -88,31 +88,31 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>This package is not yet on CRAN, but can be installed from GitHub with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
 
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"uribo/sudachir"</span><span class="op">)</span></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"uribo/sudachir"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/reticulate">reticulate</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/uribo/sudachir">sudachir</a></span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/reticulate">reticulate</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/uribo/sudachir">sudachir</a></span><span class="op">)</span></code></pre></div>
 <div id="setup-r-sudachipy-environment" class="section level3">
 <h3 class="hasAnchor">
 <a href="#setup-r-sudachipy-environment" class="anchor"></a>Setup r-sudachipy environment</h3>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="reference/install_sudachipy.html">install_sudachipy</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/reticulate/man/use_python.html">use_condaenv</a></span><span class="op">(</span>condaenv <span class="op">=</span> <span class="st">"r-sudachipy"</span>, required <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/install_sudachipy.html">install_sudachipy</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/reticulate/man/use_python.html">use_condaenv</a></span><span class="op">(</span>condaenv <span class="op">=</span> <span class="st">"r-sudachipy"</span>, required <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="tokenize" class="section level3">
 <h3 class="hasAnchor">
 <a href="#tokenize" class="anchor"></a>Tokenize</h3>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">m</span> <span class="op">&lt;-</span> 
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">m</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="reference/tokenizer.html">tokenizer</a></span><span class="op">(</span><span class="st">"高輪ゲートウェイ駅"</span>, mode <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span>
 <span class="co">#&gt; Parsed to 3 tokens</span>
 
@@ -130,9 +130,9 @@
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/reticulate/man/py_len.html">py_len</a></span><span class="op">(</span><span class="va">m</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">m</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
 <span class="op">}</span>
-<span class="co">#&gt; 高輪ゲートウェイ駅</span></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"国家公務員はかつ丼を食べたい"</span>, 
+<span class="co">#&gt; 高輪ゲートウェイ駅</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"国家公務員はかつ丼を食べたい"</span>, 
          <span class="st">"メロスは激怒した。"</span>,
          <span class="st">"吾輩は猫である。"</span><span class="op">)</span>
 
@@ -161,9 +161,9 @@
 <span class="co">#&gt; 16 3     で      だ       だ              デ      助動詞… &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  助動詞-ダ…</span>
 <span class="co">#&gt; 17 3     ある    ある     有る            アル    動詞  非自立可… &lt;NA&gt;  &lt;NA&gt;  五段-ラ行…</span>
 <span class="co">#&gt; 18 3     。      。       。              。      補助記号… 句点  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  </span>
-<span class="co">#&gt; # … with 1 more variable: 活用形 &lt;chr&gt;</span></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="reference/form.html">form</a></span><span class="op">(</span><span class="st">"東京都へ行く"</span>, mode <span class="op">=</span> <span class="st">"B"</span>, type <span class="op">=</span> <span class="st">"dictionary"</span><span class="op">)</span>
+<span class="co">#&gt; # … with 1 more variable: 活用形 &lt;chr&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/form.html">form</a></span><span class="op">(</span><span class="st">"東京都へ行く"</span>, mode <span class="op">=</span> <span class="st">"B"</span>, type <span class="op">=</span> <span class="st">"dictionary"</span><span class="op">)</span>
 <span class="co">#&gt; Parsed to 3 tokens</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt;     名詞     助詞     動詞 </span>
@@ -219,7 +219,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]][[5]]</span>
 <span class="co">#&gt; [1] "助動詞"      "*"           "*"           "*"           "助動詞-タ"  </span>
-<span class="co">#&gt; [6] "終止形-一般"</span></pre></div>
+<span class="co">#&gt; [6] "終止形-一般"</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -229,6 +229,8 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=sudachir">https://​cloud.r-project.org/​package=sudachir</a>
+</li>
 <li>Browse source code at <br><a href="https://github.com/uribo/sudachir/">https://​github.com/​uribo/​sudachir/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/uribo/sudachir/issues">https://​github.com/​uribo/​sudachir/​issues</a>
