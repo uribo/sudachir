@@ -86,10 +86,10 @@
     },
     "cpp11": {
       "Package": "cpp11",
-      "Version": "0.2.3",
+      "Version": "0.2.4",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f9df472593124299aef98fba2c96dfd3"
+      "Hash": "ba66e5a750d39067d888aa7af797fed2"
     },
     "crayon": {
       "Package": "crayon",
@@ -128,10 +128,10 @@
     },
     "downlit": {
       "Package": "downlit",
-      "Version": "0.2.0",
+      "Version": "0.2.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "0f42132bc675888f9ee5d2fa7ff07d64"
+      "Hash": "f24f1e44320a978c03050b8403a83793"
     },
     "dplyr": {
       "Package": "dplyr",
@@ -394,10 +394,10 @@
     },
     "rstudioapi": {
       "Package": "rstudioapi",
-      "Version": "0.11",
+      "Version": "0.12",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "33a5b27a03da82ac4b1d43268f80088a"
+      "Hash": "7849949afe010c2bdaffe05ccff4c731"
     },
     "stringi": {
       "Package": "stringi",
@@ -478,10 +478,10 @@
     },
     "waldo": {
       "Package": "waldo",
-      "Version": "0.2.2",
+      "Version": "0.2.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "6aa53cb78ef07cfcd7bcee7435f1d1f5"
+      "Hash": "181d1a31b1ba2009ef20926f2ee0570c"
     },
     "whisker": {
       "Package": "whisker",
