@@ -19,7 +19,13 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 ## Installation
 
-This package is not yet on CRAN, but can be installed from GitHub with:
+You can install the released version of `{sudachir}` from CRAN with:
+
+``` r
+install.packages("sudachir")
+```
+
+and also, the developmment version from GitHub
 
 ``` r
 if (!requireNamespace("remotes"))

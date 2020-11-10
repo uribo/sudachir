@@ -25,8 +25,13 @@ SudachiR is a R version of [Sudachi](https://github.com/WorksApplications/Sudach
 
 ## Installation
 
-This package is not yet on CRAN, but can be installed from GitHub with:
+You can install the released version of `{sudachir}` from CRAN with:
 
+``` r
+install.packages("sudachir")
+```
+
+and also, the developmment version from GitHub
 
 ``` r
 if (!requireNamespace("remotes"))
