@@ -3,13 +3,18 @@
 #' for installing the SudachiPy It requires version 3.5 or higher.
 create_sudachipy_env <- function(python_version = 3.9) {
   if (sum(grepl("r-sudachipy", reticulate::conda_list()$name)) == 0) {
-    if (python_version < 3.5)
+    if (python_version < 3.5) {
       rlang::abort("SudachiPy requirements for python 3.5 or higher.")
+    }
     packages <-
       c(paste("python",
-              python_version, sep = "="))
-    reticulate::conda_create(envname = "r-sudachipy",
-                             packages = packages)
+        python_version,
+        sep = "="
+      ))
+    reticulate::conda_create(
+      envname = "r-sudachipy",
+      packages = packages
+    )
   } else {
     rlang::inform(cli::col_green("r-sudachipy already exist."))
   }
@@ -33,15 +38,23 @@ install_sudachipy <- function() {
   sudachipy_version <-
     c(
       paste0("sudachipy", "==", "0.4.9"),
-      "sudachidict_core") # nolint use latest dictionary
-  reticulate::conda_install(envname = "r-sudachipy",
-                            packages = sudachipy_version,
-                            pip = TRUE)
-  cat(cli::col_green('\nInstallation complete.\n'),
-      cli::col_grey('Restarte to R, activate environment with `',
-                    cli::style_bold('reticulate::use_condaenv(condaenv = "r-sudachipy", required = TRUE)')))
-  if (rstudioapi::hasFun("restartSession"))
+      "sudachidict_core"
+    ) # nolint use latest dictionary
+  reticulate::conda_install(
+    envname = "r-sudachipy",
+    packages = sudachipy_version,
+    pip = TRUE
+  )
+  cat(
+    cli::col_green("\nInstallation complete.\n"),
+    cli::col_grey(
+      "Restarte to R, activate environment with `",
+      cli::style_bold('reticulate::use_condaenv(condaenv = "r-sudachipy", required = TRUE)')
+    )
+  )
+  if (rstudioapi::hasFun("restartSession")) {
     rstudioapi::restartSession()
+  }
   invisible(NULL)
 }
 
@@ -55,6 +68,8 @@ install_sudachipy <- function() {
 #' }
 #' @export
 remove_sudachipy <- function() {
-  reticulate::conda_remove(envname = "r-sudachipy",
-                           packages = "sudachipy")
+  reticulate::conda_remove(
+    envname = "r-sudachipy",
+    packages = "sudachipy"
+  )
 }
