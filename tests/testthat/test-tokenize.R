@@ -6,8 +6,10 @@ test_that("tokenize", {
   skip_if_no_sudachi()
   res <-
     tokenizer("Tokyo, Japan", mode = "A")
-  expect_length(res,
-                1L)
+  expect_length(
+    res,
+    1L
+  )
   expect_output(
     tokenizer("Tokyo, Japan", mode = "A"),
     "Parsed to 4 tokens"
