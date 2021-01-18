@@ -68,19 +68,21 @@ tokenizer <- function(x, mode, instance = NULL) {
 #' }
 #' @export
 tokenize_to_df <- function(x, mode, instance = NULL) {
-  purrr::map_dfr(
+  purrr::imap_dfr(
     tokenizer(x, mode = mode, instance = instance),
-    ~ tokenize_to_df_vec(.x),
-    .id = "id")
+    ~ tokenize_to_df_vec(.x, .y)
+  )
 }
 
-tokenize_to_df_vec <- function(m) {
+tokenize_to_df_vec <- function(m, i) {
   dplyr::bind_cols(
-    purrr::map_dfr(seq.int(reticulate::py_len(m)), ~
-                     tibble::tibble(surface = m[. - 1]$surface(),
-                                    dic_form = m[. - 1]$dictionary_form(),
-                                    normalized_form = m[. - 1]$normalized_form(),
-                                    reading = m[. - 1]$reading_form())),
+    tibble::tibble(id = i),
+    purrr::imap_dfr(seq.int(reticulate::py_len(m)), ~
+                     tibble::tibble(token_id = .y,
+                                    surface = m[.x - 1]$surface(),
+                                    dic_form = m[.x - 1]$dictionary_form(),
+                                    normalized_form = m[.x - 1]$normalized_form(),
+                                    reading = m[.x - 1]$reading_form())),
     purrr::map_dfr(
       seq.int(reticulate::py_len(m)),
       ~ purrr::map_dfr(purrr::set_names(
