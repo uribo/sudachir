@@ -11,7 +11,7 @@
 rebuild_tokenizer <- function(config_path = NULL) {
   dictionary <- reticulate::import("sudachipy.dictionary")
   if (!is.null(config_path)) {
-    dictionary$Dictionary()$create(config_path = file.path(config_path))
+    dictionary$Dictionary(config_path = file.path(config_path))
   } else {
     dictionary$Dictionary()$create()
   }
@@ -29,11 +29,12 @@ rebuild_tokenizer <- function(config_path = NULL) {
 #' tokenizer("Tokyo, Japan", mode = "A")
 #' }
 #' @export
-tokenizer <- function(x, mode, instance = NULL) {
-  if (is.null(instance)) {
+tokenizer <- function(x, mode = "A", instance = NULL) {
+  rlang::arg_match(mode,
+                   c("A", "B", "C"))
+  if (!is.null(instance)) {
     instance <-
-      rebuild_tokenizer()
-  } else {
+      instance$create(mode = mode)
     if (!identical(
       class(instance),
       c("sudachipy.tokenizer.Tokenizer", "python.builtin.object")
@@ -44,13 +45,15 @@ tokenizer <- function(x, mode, instance = NULL) {
         "class object"
       ))
     }
+  } else {
+    instance <-
+      rebuild_tokenizer()
   }
   mode <-
     switch(mode,
-      "A" = instance$SplitMode$A,
-      "B" = instance$SplitMode$B,
-      "C" = instance$SplitMode$C
-    )
+           "A" = instance$SplitMode$A,
+           "B" = instance$SplitMode$B,
+           "C" = instance$SplitMode$C)
   res <-
     purrr::map(
       x,
