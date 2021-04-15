@@ -4,6 +4,7 @@
 #' @param type return form. One of the following "surface", "dictionary",
 #' "normalized", "reading" or "part_of_speech".
 #' @param pos Include part of speech information with object name.
+#' @param ... path to `tokenizer` argument.
 #' @examples
 #' \dontrun{
 #' form("Tokyo", mode = "B", type = "normalized")
@@ -11,7 +12,7 @@
 #' form("Hokkaido", mode = "C", type = "part_of_speech")
 #' }
 #' @export
-form <- function(x, mode, type, pos = TRUE) {
+form <- function(x, mode, type, pos = TRUE, ...) {
   type <-
     rlang::arg_match(
       type,
@@ -31,7 +32,7 @@ form <- function(x, mode, type, pos = TRUE) {
       "reading" = "reading_form",
       "part_of_speech" = "part_of_speech"
     )
-  purrr::map(tokenizer(x, mode),
+  purrr::map(tokenizer(x, mode, ...),
     form_vec,
     type = fn,
     pos = pos

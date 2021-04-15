@@ -4,7 +4,7 @@
 \alias{form}
 \title{Parse tokenized input text}
 \usage{
-form(x, mode, type, pos = TRUE)
+form(x, mode, type, pos = TRUE, ...)
 }
 \arguments{
 \item{x}{Input text vectors}
@@ -15,6 +15,8 @@ form(x, mode, type, pos = TRUE)
 "normalized", "reading" or "part_of_speech".}
 
 \item{pos}{Include part of speech information with object name.}
+
+\item{...}{path to \code{tokenizer} argument.}
 }
 \description{
 Parse tokenized input text

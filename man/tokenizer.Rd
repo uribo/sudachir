@@ -4,7 +4,7 @@
 \alias{tokenizer}
 \title{Sudachi tokenizer}
 \usage{
-tokenizer(x, mode, instance = NULL)
+tokenizer(x, mode = "A", instance = NULL, ...)
 }
 \arguments{
 \item{x}{Input text vectors}
@@ -14,6 +14,8 @@ tokenizer(x, mode, instance = NULL)
 \item{instance}{This is optional if you already have an instance of
 \verb{<sudachipy.tokenizer.Tokenizer>} Giving them a predefined
 instance will speed up their execution.}
+
+\item{...}{path to another functions.}
 }
 \description{
 Sudachi tokenizer

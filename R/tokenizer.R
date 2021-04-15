@@ -24,12 +24,13 @@ rebuild_tokenizer <- function(config_path = NULL) {
 #' @param instance This is optional if you already have an instance of
 #' `<sudachipy.tokenizer.Tokenizer>` Giving them a predefined
 #' instance will speed up their execution.
+#' @param ... path to another functions.
 #' @examples
 #' \dontrun{
 #' tokenizer("Tokyo, Japan", mode = "A")
 #' }
 #' @export
-tokenizer <- function(x, mode = "A", instance = NULL) {
+tokenizer <- function(x, mode = "A", instance = NULL, ...) {
   rlang::arg_match(mode,
                    c("A", "B", "C"))
   if (!is.null(instance)) {
