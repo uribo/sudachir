@@ -128,7 +128,7 @@
     <p>Sudachi tokenizer</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tokenizer</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>mode</span>, instance <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tokenizer</span><span class='op'>(</span><span class='va'>x</span>, mode <span class='op'>=</span> <span class='st'>"A"</span>, instance <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,6 +146,10 @@
       <td><p>This is optional if you already have an instance of
 <code>&lt;sudachipy.tokenizer.Tokenizer&gt;</code> Giving them a predefined
 instance will speed up their execution.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>path to another functions.</p></td>
     </tr>
     </table>
 

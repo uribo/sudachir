@@ -2,7 +2,7 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2021-04-13T05:28Z
+last_built: 2021-04-15T00:34Z
 urls:
   reference: https://uribo.github.io/sudachir/reference
   article: https://uribo.github.io/sudachir/articles
