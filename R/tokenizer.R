@@ -11,7 +11,7 @@
 rebuild_tokenizer <- function(config_path = NULL) {
   dictionary <- reticulate::import("sudachipy.dictionary")
   if (!is.null(config_path)) {
-    dictionary$Dictionary(config_path = file.path(config_path))
+    dictionary$Dictionary(config_path = file.path(config_path))$create()
   } else {
     dictionary$Dictionary()$create()
   }
@@ -34,8 +34,6 @@ tokenizer <- function(x, mode = "A", instance = NULL, ...) {
   rlang::arg_match(mode,
                    c("A", "B", "C"))
   if (!is.null(instance)) {
-    instance <-
-      instance$create(mode = mode)
     if (!identical(
       class(instance),
       c("sudachipy.tokenizer.Tokenizer", "python.builtin.object")
