@@ -60,7 +60,7 @@ tokenizer <- function(x, mode = "A", instance = NULL, ...) {
       x,
       ~ instance$tokenize(.x, mode)
     )
-  purrr::map(
+  purrr::walk(
     res,
     ~ cat(cli::col_cyan(
       glue::glue("Parsed to {n} {token}\n\n",
@@ -84,45 +84,57 @@ tokenizer <- function(x, mode = "A", instance = NULL, ...) {
 #' }
 #' @export
 tokenize_to_df <- function(x, mode, instance = NULL) {
-  purrr::imap_dfr(
-    tokenizer(x, mode = mode, instance = instance),
-    ~ tokenize_to_df_vec(.x, .y)
-  )
+  tokenize_to_df_vec(tokenizer(x, mode = mode, instance = instance))
 }
 
-tokenize_to_df_vec <- function(m, i) {
+to_py_mlist <- function(m, flatten = TRUE) {
+  res <-
+    list(
+    .x = purrr::map2(
+        seq.int(length(m)),
+        purrr::map_dbl(
+          seq.int(length(m)),
+          ~ reticulate::py_len(m[[.x]])),
+        ~ rep(.x, times = .y)),
+    .y = purrr::map(
+        seq.int(length(m)),
+        ~ seq.int(reticulate::py_len(m[[.x]]))))
+  if (flatten == TRUE) {
+    res <-
+      purrr::map(
+      res,
+      purrr::flatten_dbl)
+  }
+  res
+}
+
+tokenize_to_df_vec <- function(m) {
+  py_m_list <-
+    to_py_mlist(m)
   dplyr::bind_cols(
-    tibble::tibble(id = i),
-    purrr::imap_dfr(
-      seq.int(reticulate::py_len(m)),
+    tibble::tibble(
+      id = py_m_list$.x),
+    purrr::map2_dfr(
+      .x = py_m_list$.x,
+      .y = py_m_list$.y,
       ~ tibble::tibble(
         token_id = .y,
-        surface = m[.x - 1]$surface(),
-        dic_form = m[.x - 1]$dictionary_form(),
-        normalized_form = m[.x - 1]$normalized_form(),
-        reading = m[.x - 1]$reading_form()
-      )
-    ),
-    purrr::map_dfr(
-      seq.int(reticulate::py_len(m)),
-      ~ purrr::map_dfr(purrr::set_names(
-        as.data.frame(
-          t(
-            data.frame(x = m[.x - 1]$part_of_speech())
-          )
-        ),
-        c(
-          paste0(
-            intToUtf8(c(21697, 35422)),
-            seq_len(4)
-          ),
-          intToUtf8(c(27963, 29992, 22411)),
-          intToUtf8(c(27963, 29992, 24418))
-        )
-      ),
-      dplyr::na_if,
-      y = "*"
-      )
-    )
+        surface = m[[.x]][.y - 1]$surface(),
+        dic_form = m[[.x]][.y - 1]$dictionary_form(),
+        normalized_form = m[[.x]][.y - 1]$normalized_form(),
+        reading = m[[.x]][.y - 1]$reading_form())),
+    dplyr::mutate(
+      purrr::map2_dfr(
+        py_m_list$.x,
+        py_m_list$.y,
+        ~ purrr::set_names(
+          data.frame(x = m[[.x]][.y - 1]$part_of_speech()),
+          c(
+            paste0(
+              intToUtf8(c(21697, 35422)),
+              seq_len(4)),
+            intToUtf8(c(27963, 29992, 22411)),
+            intToUtf8(c(27963, 29992, 24418))))),
+      dplyr::across(.fns = ~dplyr::na_if(.x, y = "*")))
   )
 }

@@ -68,7 +68,7 @@ form_vec <- function(x, type, pos = TRUE) {
           res,
           purrr::map_chr(
             seq.int(reticulate::py_len(x)),
-            ~ x[.x - 1]$part_of_speech()[1]
+            ~ x[.x - 1]$part_of_speech()[[1]]
           )
         )
     }
@@ -76,12 +76,7 @@ form_vec <- function(x, type, pos = TRUE) {
     res <-
       purrr::map(
         seq.int(reticulate::py_len(x)),
-        ~ purrr::pluck(
-          x[.x - 1],
-          type
-        ) %>% {
-          .()
-        }
+        ~ unlist(x[.x - 1]$part_of_speech())
       )
   }
   res
