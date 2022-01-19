@@ -48,7 +48,7 @@ install_sudachipy()
 ```
 
 ``` r
-use_condaenv(condaenv = "r-sudachipy", required = TRUE)
+use_virtualenv("r-sudachipy", required = TRUE)
 ```
 
 ### Tokenize
