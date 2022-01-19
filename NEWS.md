@@ -1,5 +1,7 @@
 # sudachir (development version)
 
+* The python environment is generated using virtualenv instead of conda.
+
 # sudachir 0.1.0
 
 # sudachir 0.0.9000
