@@ -7,13 +7,12 @@
 install_sudachipy()
 }
 \description{
-Install SudachiPy to Conda virtual environment. As a one-time setup step,
+Install SudachiPy to virtualenv virtual environment. As a one-time setup step,
 you most run \code{install_sudachipy()} to install all dependencies.
 }
 \details{
-\code{install_sudachipy()} requires Python and Conda to be installed.
-See \url{https://www.python.org/getit/} and
-\url{https://docs.conda.io/projects/conda/en/latest/user-guide/install/}.
+\code{install_sudachipy()} requires Python and virtualenv to be installed.
+See <https://www.python.org/getit/.
 }
 \examples{
 \dontrun{

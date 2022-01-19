@@ -7,7 +7,7 @@
 remove_sudachipy()
 }
 \description{
-Uninstalls SudachiPy by removing the Conda environment.
+Uninstalls SudachiPy by removing the virtualenv environment.
 }
 \examples{
 \dontrun{

@@ -1,17 +1,17 @@
-#' Create conda env used by sudachir
-#' @param python_version Python version to use within conda environment created
+#' Create virtualenv env used by sudachir
+#' @param python_version Python version to use within virtualenv environment created
 #' for installing the SudachiPy It requires version 3.5 or higher.
 create_sudachipy_env <- function(python_version = 3.9) {
-  if (sum(grepl("r-sudachipy", reticulate::conda_list()$name)) == 0) {
+  if (!reticulate::virtualenv_exists("r-sudachipy")) {
     if (python_version < 3.5) {
       rlang::abort("SudachiPy requirements for python 3.5 or higher.")
     }
     packages <-
       c(paste("python",
         python_version,
-        sep = "="
+        sep = "=="
       ))
-    reticulate::conda_create(
+    reticulate::virtualenv_create(
       envname = "r-sudachipy",
       packages = packages
     )
@@ -22,12 +22,11 @@ create_sudachipy_env <- function(python_version = 3.9) {
 
 #' Install SudachiPy
 #'
-#' Install SudachiPy to Conda virtual environment. As a one-time setup step,
+#' Install SudachiPy to virtualenv virtual environment. As a one-time setup step,
 #' you most run `install_sudachipy()` to install all dependencies.
 #'
-#' `install_sudachipy()` requires Python and Conda to be installed.
-#' See <https://www.python.org/getit/> and
-#' <https://docs.conda.io/projects/conda/en/latest/user-guide/install/>.
+#' `install_sudachipy()` requires Python and virtualenv to be installed.
+#' See <https://www.python.org/getit/.
 #' @examples
 #' \dontrun{
 #' install_sudachipy()
@@ -37,19 +36,18 @@ install_sudachipy <- function() {
   create_sudachipy_env()
   sudachipy_version <-
     c(
-      paste0("sudachipy", "==", "0.4.9"),
+      paste0("sudachipy", "==", "0.6.2"),
       "sudachidict_core"
     ) # nolint use latest dictionary
-  reticulate::conda_install(
+  reticulate::virtualenv_install(
     envname = "r-sudachipy",
-    packages = sudachipy_version,
-    pip = TRUE
+    packages = sudachipy_version
   )
   cat(
     cli::col_green("\nInstallation complete.\n"),
     cli::col_grey(
       "Restarte to R, activate environment with `",
-      cli::style_bold('reticulate::use_condaenv(condaenv = "r-sudachipy", required = TRUE)')
+      cli::style_bold('reticulate::use_virtualenv(virtualenv = "r-sudachipy", required = TRUE)')
     )
   )
   if (rstudioapi::hasFun("restartSession")) {
@@ -60,7 +58,7 @@ install_sudachipy <- function() {
 
 #' Remove SudachiPy
 #'
-#' Uninstalls SudachiPy by removing the Conda environment.
+#' Uninstalls SudachiPy by removing the virtualenv environment.
 #' @examples
 #' \dontrun{
 #' install_sudachipy()
@@ -68,7 +66,7 @@ install_sudachipy <- function() {
 #' }
 #' @export
 remove_sudachipy <- function() {
-  reticulate::conda_remove(
+  reticulate::virtualenv_remove(
     envname = "r-sudachipy",
     packages = "sudachipy"
   )

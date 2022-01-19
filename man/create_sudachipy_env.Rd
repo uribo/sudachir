@@ -2,14 +2,14 @@
 % Please edit documentation in R/install.R
 \name{create_sudachipy_env}
 \alias{create_sudachipy_env}
-\title{Create conda env used by sudachir}
+\title{Create virtualenv env used by sudachir}
 \usage{
 create_sudachipy_env(python_version = 3.9)
 }
 \arguments{
-\item{python_version}{Python version to use within conda environment created
+\item{python_version}{Python version to use within virtualenv environment created
 for installing the SudachiPy It requires version 3.5 or higher.}
 }
 \description{
-Create conda env used by sudachir
+Create virtualenv env used by sudachir
 }
