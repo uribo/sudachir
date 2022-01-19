@@ -30,7 +30,7 @@ Imports:
     tibble (>= 3.0.4),
     tidyselect (>= 1.1.0)
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Suggests: 
     rstudioapi,
