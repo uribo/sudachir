@@ -1,6 +1,7 @@
 # sudachir (development version)
 
 * The python environment is generated using virtualenv instead of conda.
+* Refactored `tokenize_to_df`.
 
 # sudachir 0.1.0
 

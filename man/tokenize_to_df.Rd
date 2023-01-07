@@ -4,12 +4,23 @@
 \alias{tokenize_to_df}
 \title{Create tokenizing data.frame using Sudachi}
 \usage{
-tokenize_to_df(x, mode, instance = NULL)
+tokenize_to_df(
+  x,
+  mode,
+  into = dict_features(),
+  col_select = seq_along(into),
+  instance = NULL
+)
 }
 \arguments{
 \item{x}{Input text vectors}
 
 \item{mode}{Select split mode (A, B, C)}
+
+\item{into}{Column names out of part-of-speech tags.}
+
+\item{col_select}{Character or integer vector of colnames
+that kept in the returned value.}
 
 \item{instance}{This is optional if you already have an instance of
 \verb{<sudachipy.tokenizer.Tokenizer>} Giving them a predefined
@@ -20,6 +31,11 @@ Create tokenizing data.frame using Sudachi
 }
 \examples{
 \dontrun{
-tokenizer("Tokyo, Japan", mode = "A")
+tokenize_to_df(
+  "Tokyo, Japan",
+  "A",
+  into = dict_features("en"),
+  col_select = c("POS1", "POS2")
+)
 }
 }
