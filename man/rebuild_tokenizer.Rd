@@ -4,9 +4,11 @@
 \alias{rebuild_tokenizer}
 \title{Rebuild tokenizer}
 \usage{
-rebuild_tokenizer(config_path = NULL)
+rebuild_tokenizer(dict_type = c("core", "small", "full"), config_path = NULL)
 }
 \arguments{
+\item{dict_type}{Dictionary type.}
+
 \item{config_path}{Absolute path to \code{sudachi.json}}
 }
 \value{
@@ -18,6 +20,6 @@ Rebuild tokenizer
 \examples{
 \dontrun{
 instance <- rebuild_tokenizer()
-tokenizer("Tokyo, Japan", mode = "A", instance)
+form("Tokyo, Japan", "A", "surface", instance = instance)
 }
 }

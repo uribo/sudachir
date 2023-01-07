@@ -20,8 +20,4 @@ instance will speed up their execution.}
 \description{
 Sudachi tokenizer
 }
-\examples{
-\dontrun{
-tokenizer("Tokyo, Japan", mode = "A")
-}
-}
+\keyword{internal}
