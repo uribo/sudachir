@@ -1,4 +1,4 @@
-#' Rebuild tokenizer
+#' Rebuild 'Sudachi' tokenizer
 #'
 #' @param dict_type Dictionary type.
 #' @param config_path Absolute path to `sudachi.json`
@@ -20,20 +20,75 @@ rebuild_tokenizer <- function(dict_type = c("core", "small", "full"),
   }
 }
 
-#' Sudachi tokenizer
+#' Package internal environment
+#' @noRd
+.pkgenv <- rlang::env()
+
+#' Call 'Sudachi' tokenizer
 #'
-#' @param x Input text vectors
-#' @param mode Select split mode (A, B, C)
-#' @param instance This is optional if you already have an instance of
-#' `<sudachipy.tokenizer.Tokenizer>` Giving them a predefined
-#' instance will speed up their execution.
-#' @param ... path to another functions.
-#' @keywords internal
-tokenizer <- function(x, mode = "A", instance = NULL, ...) {
-  rlang::arg_match(
-    mode,
-    c("A", "B", "C")
+#' @param sentence Input text vectors.
+#' @param doc_id Identifier of input sentences.
+#' @param mode Split mode (A, B, C)
+#' @param instance This is optional; if you already have an instance of
+#' `<sudachipy.tokenizer.Tokenizer>`, supplying the predefined
+#' instance would improve the performance.
+#' @export
+as_tokens <- function(sentence,
+                      doc_id = seq_along(sentence),
+                      mode = "C",
+                      instance = rebuild_tokenizer()) {
+  reticulate::source_python(
+    system.file("wrapper.py", package = "sudachir"),
+    envir = .pkgenv,
+    convert = FALSE
   )
+  tokenizer <- reticulate::import("sudachipy.tokenizer")
+  mode <- switch(mode,
+    "A" = tokenizer$Tokenizer$SplitMode$A,
+    "B" = tokenizer$Tokenizer$SplitMode$B,
+    "C" = tokenizer$Tokenizer$SplitMode$C
+  )
+
+  .pkgenv$tokenize_to_pd(
+    data.frame(
+      doc_id = doc_id,
+      text = sentence
+    ),
+    text_field = "text",
+    docid_field = "doc_id",
+    mode = mode,
+    instance = instance
+  ) %>%
+    reticulate::py_to_r() %>%
+    dplyr::as_tibble()
+}
+
+#' Create a data.frame of tokens
+#'
+#' @inheritParams as_tokens
+#' @param into Column names of features.
+#' @param col_select Character or integer vector of column names
+#' that kept in the returned value.
+#' @param ... Currently not used.
+#' @examples
+#' \dontrun{
+#' tokenize_to_df(
+#'   "Tokyo, Japan",
+#'   mode = "A",
+#'   into = dict_features("en"),
+#'   col_select = c("POS1", "POS2")
+#' )
+#' }
+#' @export
+tokenize_to_df <- function(sentence,
+                           doc_id = seq_along(sentence),
+                           mode = c("C", "B", "A"),
+                           into = dict_features(),
+                           col_select = seq_along(into),
+                           instance = NULL,
+                           ...) {
+  mode <- rlang::arg_match(mode)
+
   if (!is.null(instance)) {
     if (!identical(
       class(instance),
@@ -48,118 +103,10 @@ tokenizer <- function(x, mode = "A", instance = NULL, ...) {
   } else {
     instance <- rebuild_tokenizer()
   }
-  tokenizer <- reticulate::import("sudachipy.tokenizer")
-  mode <- switch(mode,
-    "A" = tokenizer$Tokenizer$SplitMode$A,
-    "B" = tokenizer$Tokenizer$SplitMode$B,
-    "C" = tokenizer$Tokenizer$SplitMode$C
-  )
-  purrr::map(x, function(.x) {
-    instance$tokenize(.x, mode)
-  })
-}
 
-#' Create tokenizing data.frame using Sudachi
-#'
-#' @inheritParams tokenizer
-#' @param into Column names out of part-of-speech tags.
-#' @param col_select Character or integer vector of colnames
-#' that kept in the returned value.
-#' @examples
-#' \dontrun{
-#' tokenize_to_df(
-#'   "Tokyo, Japan",
-#'   "A",
-#'   into = dict_features("en"),
-#'   col_select = c("POS1", "POS2")
-#' )
-#' }
-#' @export
-tokenize_to_df <- function(x,
-                           mode,
-                           into = dict_features(),
-                           col_select = seq_along(into),
-                           instance = NULL) {
-  tokenize_to_df_vec(
-    tokenizer(x, mode = mode, instance = instance),
-    into = into,
-    col_select = col_select
-  )
-}
-
-to_py_mlist <- function(m, flatten = TRUE) {
-  res <-
-    list(
-      .x = purrr::map2(
-        seq.int(length(m)),
-        purrr::map_dbl(seq.int(length(m)), function(.x) {
-          m[[.x]]$size()
-        }),
-        function(.x, .y) rep(.x, times = .y)
-      ),
-      .y = purrr::map(
-        seq.int(length(m)),
-        function(.x) {
-          seq.int(m[[.x]]$size())
-        }
-      )
+  as_tokens(sentence, doc_id, mode, instance) %>%
+    audubon::prettify(
+      into = into,
+      col_select = col_select
     )
-  if (!flatten) {
-    return(res)
-  }
-  purrr::map(res, purrr::flatten_dbl)
-}
-
-tokenize_to_df_vec <- function(m,
-                               into = dict_features(),
-                               col_select = seq_along(into)) {
-  if (is.numeric(col_select) && max(col_select) <= length(into)) {
-    col_select <- which(seq_along(into) %in% col_select, arr.ind = TRUE)
-  } else {
-    col_select <- which(into %in% col_select, arr.ind = TRUE)
-  }
-  if (rlang::is_empty(col_select)) {
-    rlang::abort("Invalid columns have been selected.")
-  }
-  py_m_list <- to_py_mlist(m)
-
-  doc_id <- tibble::tibble(doc_id = py_m_list$.x)
-
-  tokens <-
-    purrr::map2(
-      .x = py_m_list$.x,
-      .y = py_m_list$.y,
-      function(.x, .y) {
-        tibble::tibble(
-          token_id = .y,
-          surface = m[[.x]][.y - 1]$surface(),
-          dic_form = m[[.x]][.y - 1]$dictionary_form(),
-          normalized_form = m[[.x]][.y - 1]$normalized_form(),
-          reading = m[[.x]][.y - 1]$reading_form()
-        )
-      }
-    ) |>
-    purrr::list_rbind()
-
-  features <-
-    purrr::map2(
-      py_m_list$.x,
-      py_m_list$.y,
-      function(.x, .y) {
-        purrr::set_names(
-          unlist(m[[.x]][.y - 1]$part_of_speech())[col_select],
-          into[col_select]
-        ) |>
-          tibble::enframe() |>
-          tidyr::pivot_wider(names_from = .data$name, values_from = .data$value)
-      }
-    ) |>
-    purrr::list_rbind() |>
-    dplyr::mutate(dplyr::across(where(is.character), ~ dplyr::na_if(., "*")))
-
-  dplyr::bind_cols(
-    doc_id,
-    tokens,
-    features
-  )
 }

@@ -2,29 +2,30 @@
 % Please edit documentation in R/form.R
 \name{form}
 \alias{form}
-\title{Parse tokenized input text}
+\title{Create a list of tokens}
 \usage{
-form(x, mode, type, pos = TRUE, ...)
+form(tbl, type, pos = TRUE, ...)
 }
 \arguments{
-\item{x}{Input text vectors}
+\item{tbl}{A data.frame of tokens out of \code{tokenize_to_df}.}
 
-\item{mode}{Select split mode (A, B, C)}
+\item{type}{Preference for the form of returned tokens.
+Pick one of "surface", "dictionary", "normalized", "reading".}
 
-\item{type}{return form. One of the following "surface", "dictionary",
-"normalized", "reading" or "part_of_speech".}
+\item{pos}{When supplied with \code{TRUE}, this function
+uses the part-of-speech information as the name of the returned tokens.}
 
-\item{pos}{Include part of speech information with object name.}
-
-\item{...}{path to \code{tokenizer} argument.}
+\item{...}{Passed to \code{dict_features}.}
 }
 \description{
-Parse tokenized input text
+Create a list of tokens
 }
 \examples{
 \dontrun{
-form("Tokyo", mode = "B", type = "normalized")
-form("Osaka", mode = "B", type = "surface")
-form("Hokkaido", mode = "C", type = "part_of_speech")
+tokenize_to_df(
+  "Tokyo, Japan",
+  mode = "A"
+) |>
+form(type = "surface")
 }
 }

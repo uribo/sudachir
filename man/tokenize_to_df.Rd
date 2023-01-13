@@ -2,38 +2,44 @@
 % Please edit documentation in R/tokenizer.R
 \name{tokenize_to_df}
 \alias{tokenize_to_df}
-\title{Create tokenizing data.frame using Sudachi}
+\title{Create a data.frame of tokens}
 \usage{
 tokenize_to_df(
-  x,
-  mode,
+  sentence,
+  doc_id = seq_along(sentence),
+  mode = c("C", "B", "A"),
   into = dict_features(),
   col_select = seq_along(into),
-  instance = NULL
+  instance = NULL,
+  ...
 )
 }
 \arguments{
-\item{x}{Input text vectors}
+\item{sentence}{Input text vectors.}
 
-\item{mode}{Select split mode (A, B, C)}
+\item{doc_id}{Identifier of input sentences.}
 
-\item{into}{Column names out of part-of-speech tags.}
+\item{mode}{Split mode (A, B, C)}
 
-\item{col_select}{Character or integer vector of colnames
+\item{into}{Column names of features.}
+
+\item{col_select}{Character or integer vector of column names
 that kept in the returned value.}
 
-\item{instance}{This is optional if you already have an instance of
-\verb{<sudachipy.tokenizer.Tokenizer>} Giving them a predefined
-instance will speed up their execution.}
+\item{instance}{This is optional; if you already have an instance of
+\verb{<sudachipy.tokenizer.Tokenizer>}, supplying the predefined
+instance would improve the performance.}
+
+\item{...}{Currently not used.}
 }
 \description{
-Create tokenizing data.frame using Sudachi
+Create a data.frame of tokens
 }
 \examples{
 \dontrun{
 tokenize_to_df(
   "Tokyo, Japan",
-  "A",
+  mode = "A",
   into = dict_features("en"),
   col_select = c("POS1", "POS2")
 )

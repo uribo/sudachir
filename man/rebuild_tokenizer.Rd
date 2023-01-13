@@ -2,7 +2,7 @@
 % Please edit documentation in R/tokenizer.R
 \name{rebuild_tokenizer}
 \alias{rebuild_tokenizer}
-\title{Rebuild tokenizer}
+\title{Rebuild 'Sudachi' tokenizer}
 \usage{
 rebuild_tokenizer(dict_type = c("core", "small", "full"), config_path = NULL)
 }
@@ -15,7 +15,7 @@ rebuild_tokenizer(dict_type = c("core", "small", "full"), config_path = NULL)
 Returns a binding to the instance of \verb{<sudachipy.tokenizer.Tokenizer>}.
 }
 \description{
-Rebuild tokenizer
+Rebuild 'Sudachi' tokenizer
 }
 \examples{
 \dontrun{
