@@ -3,7 +3,19 @@ from sudachipy import tokenizer
 from sudachipy import dictionary
 
 def tokenize_to_pd(docs, text_field, docid_field, instance, mode):
-  
+  """Tokenize text of a pandas dataframe
+
+  Args:
+    docs (pandas.DataFrame): A dataframe of corpus.
+    text_field (str): Column name that contains text to be tokenized.
+    docid_field (str): Column name that contains identifier of documents.
+    instance (sudachipy.tokenizer.Tokenizer): Sudachi tokenizer.
+    mode (sudachipy.tokenizer.Tokenizer.splitMode): Split mode.
+
+  Returns:
+    pandas.DataFrame: A dataframe of tokens.
+  """
+
   doc_id = []
   token_id = []
   surface = []
@@ -28,7 +40,7 @@ def tokenize_to_pd(docs, text_field, docid_field, instance, mode):
         tid += 1
       tid = 1
 
-  df = pd.DataFrame({
+  return(pd.DataFrame({
     "doc_id": doc_id,
     "token_id": token_id,
     "surface": surface,
@@ -36,6 +48,4 @@ def tokenize_to_pd(docs, text_field, docid_field, instance, mode):
     "normalized_form": norm_form,
     "reading_form": reading_form,
     "feature": feature
-  })
-
-  return(df)
+  }))

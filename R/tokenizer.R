@@ -5,8 +5,8 @@
 #' @return Returns a binding to the instance of `<sudachipy.tokenizer.Tokenizer>`.
 #' @examples
 #' \dontrun{
-#' instance <- rebuild_tokenizer()
-#' form("Tokyo, Japan", "A", "surface", instance = instance)
+#' tokenizer <- rebuild_tokenizer()
+#' as_tokens("Tokyo, Japan", instance = tokenizer)
 #' }
 #' @export
 rebuild_tokenizer <- function(dict_type = c("core", "small", "full"),
@@ -32,6 +32,10 @@ rebuild_tokenizer <- function(dict_type = c("core", "small", "full"),
 #' @param instance This is optional; if you already have an instance of
 #' `<sudachipy.tokenizer.Tokenizer>`, supplying the predefined
 #' instance would improve the performance.
+#' @examples
+#' \dontrun{
+#' as_tokens("Tokyo, Japan")
+#' }
 #' @export
 as_tokens <- function(sentence,
                       doc_id = seq_along(sentence),

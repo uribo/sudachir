@@ -19,7 +19,7 @@ Rebuild 'Sudachi' tokenizer
 }
 \examples{
 \dontrun{
-instance <- rebuild_tokenizer()
-form("Tokyo, Japan", "A", "surface", instance = instance)
+tokenizer <- rebuild_tokenizer()
+as_tokens("Tokyo, Japan", instance = tokenizer)
 }
 }

@@ -25,3 +25,8 @@ instance would improve the performance.}
 \description{
 Call 'Sudachi' tokenizer
 }
+\examples{
+\dontrun{
+as_tokens("Tokyo, Japan")
+}
+}
