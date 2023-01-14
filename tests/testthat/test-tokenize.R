@@ -1,7 +1,7 @@
 context("tokenize")
 
-skip_on_os("windows")
 skip_if_no_sudachi()
+# skip_on_os("windows")
 
 source("utils.R")
 
