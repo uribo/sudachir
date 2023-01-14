@@ -14,7 +14,6 @@
 #' ) |>
 #' as_phrase(type = "surface")
 #' }
-#' @aliases form
 #' @export
 as_phrase <- function(tbl, type, pos = TRUE, ...) {
   type <-
@@ -48,20 +47,45 @@ as_phrase <- function(tbl, type, pos = TRUE, ...) {
     })
   }
 
-  names(res) <- unique(dplyr::pull(tbl, "doc_id"))
+  col_u <- dplyr::pull(tbl, "doc_id")
+  if (is.factor(col_u)) {
+    col_u <- levels(col_u)
+  } else {
+    col_u <- unique(col_u)
+  }
+  names(res) <- col_u
   res
 }
 
 #' Create a list of tokens
 #'
-#' @inheritParams as_phrase
+#' This function is a shorthand of `tokenize_to_df() |> as_phrase()`.
+#'
+#' @inheritParams tokenize_to_df
+#' @param ... Passed to `as_phrase`.
 #' @examples
 #' \dontrun{
-#' tokenize_to_df(
+#' form(
 #'   "Tokyo, Japan",
-#'   mode = "A"
-#' ) |>
-#' form(type = "surface")
+#'   mode = "A",
+#'   type = "surface"
+#' )
 #' }
 #' @export
-form <- as_phrase
+form <- function(sentence,
+                 doc_id = seq_along(sentence),
+                 mode = c("C", "B", "A"),
+                 into = dict_features(),
+                 col_select = seq_along(into),
+                 instance = NULL,
+                 ...) {
+  tokenize_to_df(
+    sentence,
+    doc_id = doc_id,
+    mode = mode,
+    into = into,
+    col_select = col_select,
+    instance = instance
+  ) %>%
+    as_phrase(...)
+}

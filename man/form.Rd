@@ -4,28 +4,43 @@
 \alias{form}
 \title{Create a list of tokens}
 \usage{
-form(tbl, type, pos = TRUE, ...)
+form(
+  sentence,
+  doc_id = seq_along(sentence),
+  mode = c("C", "B", "A"),
+  into = dict_features(),
+  col_select = seq_along(into),
+  instance = NULL,
+  ...
+)
 }
 \arguments{
-\item{tbl}{A data.frame of tokens out of \code{tokenize_to_df()}.}
+\item{sentence}{Input text vectors.}
 
-\item{type}{Preference for the form of returned tokens.
-Pick one of "surface", "dictionary", "normalized", or "reading".}
+\item{doc_id}{Identifier of input sentences.}
 
-\item{pos}{When supplied with \code{TRUE}, this function
-uses the part-of-speech information as the name of the returned tokens.}
+\item{mode}{Split mode (A, B, C)}
 
-\item{...}{Passed to \code{dict_features()}.}
+\item{into}{Column names of features.}
+
+\item{col_select}{Character or integer vector of column names
+that kept in the returned value.}
+
+\item{instance}{This is optional; if you already have an instance of
+\verb{<sudachipy.tokenizer.Tokenizer>}, supplying the predefined
+instance would improve the performance.}
+
+\item{...}{Passed to \code{as_phrase}.}
 }
 \description{
-Create a list of tokens
+This function is a shorthand of \code{tokenize_to_df() |> as_phrase()}.
 }
 \examples{
 \dontrun{
-tokenize_to_df(
+form(
   "Tokyo, Japan",
-  mode = "A"
-) |>
-form(type = "surface")
+  mode = "A",
+  type = "surface"
+)
 }
 }

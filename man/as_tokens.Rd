@@ -7,7 +7,6 @@
 as_tokens(
   sentence,
   doc_id = seq_along(sentence),
-  mode = "C",
   instance = rebuild_tokenizer()
 )
 }
@@ -15,8 +14,6 @@ as_tokens(
 \item{sentence}{Input text vectors.}
 
 \item{doc_id}{Identifier of input sentences.}
-
-\item{mode}{Split mode (A, B, C)}
 
 \item{instance}{This is optional; if you already have an instance of
 \verb{<sudachipy.tokenizer.Tokenizer>}, supplying the predefined

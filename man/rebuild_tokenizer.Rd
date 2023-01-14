@@ -4,9 +4,15 @@
 \alias{rebuild_tokenizer}
 \title{Rebuild 'Sudachi' tokenizer}
 \usage{
-rebuild_tokenizer(dict_type = c("core", "small", "full"), config_path = NULL)
+rebuild_tokenizer(
+  mode = c("C", "B", "A"),
+  dict_type = c("core", "small", "full"),
+  config_path = NULL
+)
 }
 \arguments{
+\item{mode}{Split mode (A, B, C)}
+
 \item{dict_type}{Dictionary type.}
 
 \item{config_path}{Absolute path to \code{sudachi.json}}

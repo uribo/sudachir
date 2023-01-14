@@ -2,7 +2,6 @@
 % Please edit documentation in R/as_phrase.R
 \name{as_phrase}
 \alias{as_phrase}
-\alias{form}
 \title{Create a list of tokens}
 \usage{
 as_phrase(tbl, type, pos = TRUE, ...)

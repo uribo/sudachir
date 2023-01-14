@@ -2,7 +2,7 @@ import pandas as pd
 from sudachipy import tokenizer
 from sudachipy import dictionary
 
-def tokenize_to_pd(docs, text_field, docid_field, instance, mode):
+def tokenize_to_pd(docs, text_field, docid_field, instance):
   """Tokenize text of a pandas dataframe
 
   Args:
@@ -27,9 +27,11 @@ def tokenize_to_pd(docs, text_field, docid_field, instance, mode):
   for i in range(len(docs)):
     texts = docs.get(text_field)[i].splitlines()
     docname = docs.get(docid_field)[i]
+    morphemes = instance.tokenize("");
     tid = 1
     for text in filter(None, texts):
-      for m in instance.tokenize(text, mode):
+      instance.tokenize(text, out = morphemes);
+      for m in morphemes:
         doc_id.append(docname)
         token_id.append(tid)
         surface.append(m.surface())

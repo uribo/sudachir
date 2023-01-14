@@ -1,5 +1,6 @@
 #' Rebuild 'Sudachi' tokenizer
 #'
+#' @param mode Split mode (A, B, C)
 #' @param dict_type Dictionary type.
 #' @param config_path Absolute path to `sudachi.json`
 #' @return Returns a binding to the instance of `<sudachipy.tokenizer.Tokenizer>`.
@@ -9,14 +10,23 @@
 #' as_tokens("Tokyo, Japan", instance = tokenizer)
 #' }
 #' @export
-rebuild_tokenizer <- function(dict_type = c("core", "small", "full"),
+rebuild_tokenizer <- function(mode = c("C", "B", "A"),
+                              dict_type = c("core", "small", "full"),
                               config_path = NULL) {
+  mode <- rlang::arg_match(mode)
   dict_type <- rlang::arg_match(dict_type)
+
+  tokenizer <- reticulate::import("sudachipy.tokenizer")
+  mode <- switch(mode,
+    "A" = tokenizer$Tokenizer$SplitMode$A,
+    "B" = tokenizer$Tokenizer$SplitMode$B,
+    "C" = tokenizer$Tokenizer$SplitMode$C
+  )
   dictionary <- reticulate::import("sudachipy.dictionary")
   if (!is.null(config_path)) {
-    dictionary$Dictionary(config_path = file.path(config_path))$create()
+    dictionary$Dictionary(config_path = file.path(config_path))$create(mode)
   } else {
-    dictionary$Dictionary(dict_type = dict_type)$create()
+    dictionary$Dictionary(dict_type = dict_type)$create(mode)
   }
 }
 
@@ -28,7 +38,6 @@ rebuild_tokenizer <- function(dict_type = c("core", "small", "full"),
 #'
 #' @param sentence Input text vectors.
 #' @param doc_id Identifier of input sentences.
-#' @param mode Split mode (A, B, C)
 #' @param instance This is optional; if you already have an instance of
 #' `<sudachipy.tokenizer.Tokenizer>`, supplying the predefined
 #' instance would improve the performance.
@@ -39,20 +48,12 @@ rebuild_tokenizer <- function(dict_type = c("core", "small", "full"),
 #' @export
 as_tokens <- function(sentence,
                       doc_id = seq_along(sentence),
-                      mode = "C",
                       instance = rebuild_tokenizer()) {
   reticulate::source_python(
     system.file("wrapper.py", package = "sudachir"),
     envir = .pkgenv,
     convert = FALSE
   )
-  tokenizer <- reticulate::import("sudachipy.tokenizer")
-  mode <- switch(mode,
-    "A" = tokenizer$Tokenizer$SplitMode$A,
-    "B" = tokenizer$Tokenizer$SplitMode$B,
-    "C" = tokenizer$Tokenizer$SplitMode$C
-  )
-
   .pkgenv$tokenize_to_pd(
     data.frame(
       doc_id = doc_id,
@@ -60,7 +61,6 @@ as_tokens <- function(sentence,
     ),
     text_field = "text",
     docid_field = "doc_id",
-    mode = mode,
     instance = instance
   ) %>%
     reticulate::py_to_r() %>%
@@ -70,6 +70,7 @@ as_tokens <- function(sentence,
 #' Create a data.frame of tokens
 #'
 #' @inheritParams as_tokens
+#' @param mode Split mode (A, B, C)
 #' @param into Column names of features.
 #' @param col_select Character or integer vector of column names
 #' that kept in the returned value.
@@ -91,8 +92,6 @@ tokenize_to_df <- function(sentence,
                            col_select = seq_along(into),
                            instance = NULL,
                            ...) {
-  mode <- rlang::arg_match(mode)
-
   if (!is.null(instance)) {
     if (!identical(
       class(instance),
@@ -105,10 +104,10 @@ tokenize_to_df <- function(sentence,
       ))
     }
   } else {
-    instance <- rebuild_tokenizer()
+    instance <- rebuild_tokenizer(mode)
   }
 
-  as_tokens(sentence, doc_id, mode, instance) %>%
+  as_tokens(sentence, doc_id, instance) %>%
     audubon::prettify(
       into = into,
       col_select = col_select
