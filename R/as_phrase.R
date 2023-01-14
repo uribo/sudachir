@@ -12,7 +12,7 @@
 #'   "Tokyo, Japan",
 #'   mode = "A"
 #' ) |>
-#' as_phrase(type = "surface")
+#'   as_phrase(type = "surface")
 #' }
 #' @export
 as_phrase <- function(tbl, type, pos = TRUE, ...) {
@@ -23,9 +23,14 @@ as_phrase <- function(tbl, type, pos = TRUE, ...) {
         "surface",
         "dictionary",
         "normalized",
-        "reading"
+        "reading",
+        "part_of_speech"
       )
     )
+  if (type == "part_of_speech") {
+    rlang::abort("`type=\"part_of_speech\"` is defuncted.")
+  }
+
   fn <-
     switch(type,
       "surface" = "surface",

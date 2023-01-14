@@ -1,11 +1,11 @@
 #' Create virtualenv env used by sudachir
-#' @param python_version Python version to use within virtualenv environment created
-#' for installing the SudachiPy It requires version 3.5 or higher.
-create_sudachipy_env <- function(python_version = "3.9:latest") {
+#' @param python_version Python version to use within the virtualenv environment created.
+#' SudachiPy requires Python 3.6 or higher to install.
+create_sudachipy_env <- function(python_version = "3.9.12") {
   if (!reticulate::virtualenv_exists("r-sudachipy")) {
-    # if (python_version < 3.5) {
-    #   rlang::abort("SudachiPy requirements for python 3.5 or higher.")
-    # }
+    if (as.numeric_version(python_version) < 3.6) {
+      rlang::abort("SudachiPy requires Python 3.6 or higher to install.")
+    }
     reticulate::virtualenv_create(
       envname = "r-sudachipy",
       version = python_version

@@ -4,11 +4,11 @@
 \alias{create_sudachipy_env}
 \title{Create virtualenv env used by sudachir}
 \usage{
-create_sudachipy_env(python_version = 3.9)
+create_sudachipy_env(python_version = "3.9.12")
 }
 \arguments{
-\item{python_version}{Python version to use within virtualenv environment created
-for installing the SudachiPy It requires version 3.5 or higher.}
+\item{python_version}{Python version to use within the virtualenv environment created.
+SudachiPy requires Python 3.6 or higher to install.}
 }
 \description{
 Create virtualenv env used by sudachir

@@ -1,11 +1,11 @@
 context("tokenize")
 
-source("utils.R")
-
-skip_if_no_sudachi()
-# skip_on_os("windows")
+source(test_path("utils.R"))
 
 test_that("tokenize works", {
+  skip_on_cran()
+  skip_if_no_sudachi()
+
   tokenizer <- rebuild_tokenizer(dict_type = "core")
   expect_s3_class(
     tokenizer,

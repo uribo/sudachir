@@ -26,6 +26,6 @@ tokenize_to_df(
   "Tokyo, Japan",
   mode = "A"
 ) |>
-as_phrase(type = "surface")
+  as_phrase(type = "surface")
 }
 }
