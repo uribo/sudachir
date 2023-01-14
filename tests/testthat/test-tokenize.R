@@ -1,9 +1,9 @@
 context("tokenize")
 
+source("utils.R")
+
 skip_if_no_sudachi()
 # skip_on_os("windows")
-
-source("utils.R")
 
 test_that("tokenize works", {
   tokenizer <- rebuild_tokenizer(dict_type = "core")

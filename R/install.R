@@ -8,7 +8,7 @@ create_sudachipy_env <- function(python_version = "3.9:latest") {
     # }
     reticulate::virtualenv_create(
       envname = "r-sudachipy",
-      python = python_version
+      version = python_version
     )
   } else {
     rlang::inform(cli::col_green("r-sudachipy already exists."))

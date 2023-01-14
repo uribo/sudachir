@@ -1,9 +1,9 @@
 context("setup")
 
+# source("utils.R")
+
 skip_on_cran()
 skip_on_os("windows")
-
-source("utils.R")
 
 test_that("multiplication works", {
   install_sudachipy()
