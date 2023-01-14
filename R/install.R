@@ -36,7 +36,7 @@ install_sudachipy <- function() {
   create_sudachipy_env()
   sudachipy_version <-
     c(
-      paste0("sudachipy", "==", "0.6.2"),
+      paste0("sudachipy", ">=", "0.6.6"),
       "sudachidict_core"
     ) # nolint use latest dictionary
   reticulate::virtualenv_install(
@@ -46,7 +46,7 @@ install_sudachipy <- function() {
   cat(
     cli::col_green("\nInstallation complete.\n"),
     cli::col_grey(
-      "Restarte to R, activate environment with `",
+      "Restart R, activate environment with `",
       cli::style_bold('reticulate::use_virtualenv(virtualenv = "r-sudachipy", required = TRUE)')
     )
   )
