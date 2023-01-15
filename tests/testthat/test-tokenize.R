@@ -4,6 +4,7 @@ source(test_path("utils.R"))
 
 test_that("tokenize works", {
   skip_on_cran()
+  skip_on_os("windows")
   skip_if_no_sudachi()
 
   tokenizer <- rebuild_tokenizer(dict_type = "core")
