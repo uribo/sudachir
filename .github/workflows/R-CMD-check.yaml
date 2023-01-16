@@ -18,13 +18,13 @@ jobs:
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         config:
-          - {os: windows-latest, r: 'release', python: 'pypy3.9'}
-          - {os: macOS-latest, r: 'release', python: 'pypy3.9'}
-          - {os: ubuntu-latest, r: 'release', python: 'pypy3.9'}
-          - {os: ubuntu-latest, r: 'devel', python: 'pypy3.9'}
+          - {os: windows-latest, r: 'release', python: '3.10'}
+          - {os: macOS-latest, r: 'release', python: '3.10'}
+          - {os: ubuntu-latest, r: 'release', python: '3.10'}
+          # - {os: ubuntu-latest, r: 'devel', python: '3.10'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -53,7 +53,7 @@ jobs:
       - name: Install virtualenv
         run: |
            python -m pip install --upgrade --user virtualenv
-      - name: Setup venv
+      - name: Set up venv
         shell: Rscript {0}
         run: |
           reticulate::virtualenv_create("r-sudachipy", Sys.which("python"))
