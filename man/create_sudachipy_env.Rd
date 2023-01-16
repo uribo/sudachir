@@ -7,7 +7,8 @@
 create_sudachipy_env(python_version = "3.9.12")
 }
 \arguments{
-\item{python_version}{Python version to use within the virtualenv environment created.
+\item{python_version}{Python version to use
+within the virtualenv environment created.
 SudachiPy requires Python 3.6 or higher to install.}
 }
 \description{

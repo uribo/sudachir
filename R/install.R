@@ -1,5 +1,6 @@
 #' Create virtualenv env used by sudachir
-#' @param python_version Python version to use within the virtualenv environment created.
+#' @param python_version Python version to use
+#' within the virtualenv environment created.
 #' SudachiPy requires Python 3.6 or higher to install.
 create_sudachipy_env <- function(python_version = "3.9.12") {
   if (!reticulate::virtualenv_exists("r-sudachipy")) {
@@ -17,11 +18,12 @@ create_sudachipy_env <- function(python_version = "3.9.12") {
 
 #' Install SudachiPy
 #'
-#' Install SudachiPy to virtualenv virtual environment. As a one-time setup step,
-#' you most run `install_sudachipy()` to install all dependencies.
+#' Install SudachiPy to virtualenv virtual environment.
+#' As a one-time setup step, you can run
+#' `install_sudachipy()` to install all dependencies.
 #'
-#' `install_sudachipy()` requires Python and virtualenv to be installed.
-#' See <https://www.python.org/getit/.
+#' `install_sudachipy()` requires Python and virtualenv installed.
+#' See <https://www.python.org/getit/>.
 #' @examples
 #' \dontrun{
 #' install_sudachipy()
@@ -29,14 +31,14 @@ create_sudachipy_env <- function(python_version = "3.9.12") {
 #' @export
 install_sudachipy <- function() {
   create_sudachipy_env()
-  sudachipy_version <-
+  sudachipy_packages <-
     c(
       paste0("sudachipy", ">=", "0.6.6"),
-      "sudachidict_core"
-    ) # nolint use latest dictionary
+      "sudachidict_core", "pandas"
+    )
   reticulate::virtualenv_install(
     envname = "r-sudachipy",
-    packages = sudachipy_version
+    packages = sudachipy_packages
   )
   cat(
     cli::col_green("\nInstallation complete.\n"),

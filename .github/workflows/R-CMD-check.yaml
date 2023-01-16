@@ -59,9 +59,6 @@ jobs:
           reticulate::virtualenv_create("r-sudachipy", Sys.which("python"))
           reticulate::virtualenv_install("r-sudachipy",
             c("pandas", "sudachipy", "sudachidict_core"))
-          python <- reticulate::virtualenv_python("r-sudachipy")
-          writeLines(sprintf("RETICULATE_PYTHON=%s", python),
-                     Sys.getenv("GITHUB_ENV"))
 
       - uses: r-lib/actions/check-r-package@v2
         with:

@@ -30,7 +30,7 @@ that kept in the returned value.}
 \verb{<sudachipy.tokenizer.Tokenizer>}, supplying the predefined
 instance would improve the performance.}
 
-\item{...}{Passed to \code{as_phrase}.}
+\item{...}{Passed to \code{as_phrase()}.}
 }
 \description{
 This function is a shorthand of \code{tokenize_to_df() |> as_phrase()}.

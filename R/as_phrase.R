@@ -67,7 +67,7 @@ as_phrase <- function(tbl, type, pos = TRUE, ...) {
 #' This function is a shorthand of `tokenize_to_df() |> as_phrase()`.
 #'
 #' @inheritParams tokenize_to_df
-#' @param ... Passed to `as_phrase`.
+#' @param ... Passed to `as_phrase()`.
 #' @examples
 #' \dontrun{
 #' form(

@@ -1,7 +1,7 @@
 Type: Package
 Package: sudachir
 Title: R Interface to 'Sudachi'
-Version: 0.1.0.9003
+Version: 0.1.0.9004
 Authors@R: c(
     person("Shinya", "Uryu", , "suika1127@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0493-6186")),
@@ -25,7 +25,6 @@ Suggests:
     roxygen2,
     testthat
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-SystemRequirements: Python (>= 3.5)
+SystemRequirements: Python (>= 3.6)
