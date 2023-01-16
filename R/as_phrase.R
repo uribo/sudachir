@@ -1,7 +1,7 @@
 #' Create a list of tokens
 #'
 #' @param tbl A data.frame of tokens out of `tokenize_to_df()`.
-#' @param type Preference for the form of returned tokens.
+#' @param type Preference for the format of returned tokens.
 #' Pick one of "surface", "dictionary", "normalized", or "reading".
 #' @param pos When supplied with `TRUE`, this function
 #' uses the part-of-speech information as the name of the returned tokens.

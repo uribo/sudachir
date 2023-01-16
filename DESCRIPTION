@@ -9,7 +9,7 @@ Authors@R: c(
   )
 Maintainer: Shinya Uryu <suika1127@gmail.com>
 Description: Interface to 'Sudachi'
-    <https://github.com/WorksApplications/Sudachi>, a Japanese
+    <https://github.com/WorksApplications/sudachi.rs>, a Japanese
     morphological analyzer. This is a port of what is available in Python.
 License: Apache License (>= 2.0)
 URL: https://github.com/uribo/sudachir

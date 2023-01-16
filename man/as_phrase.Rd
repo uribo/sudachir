@@ -9,7 +9,7 @@ as_phrase(tbl, type, pos = TRUE, ...)
 \arguments{
 \item{tbl}{A data.frame of tokens out of \code{tokenize_to_df()}.}
 
-\item{type}{Preference for the form of returned tokens.
+\item{type}{Preference for the format of returned tokens.
 Pick one of "surface", "dictionary", "normalized", or "reading".}
 
 \item{pos}{When supplied with \code{TRUE}, this function
