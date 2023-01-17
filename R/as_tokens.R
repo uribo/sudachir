@@ -16,17 +16,16 @@ rebuild_tokenizer <- function(mode = c("C", "B", "A"),
   mode <- rlang::arg_match(mode)
   dict_type <- rlang::arg_match(dict_type)
 
-  tokenizer <- reticulate::import("sudachipy.tokenizer")
+  sudachi <- reticulate::import("sudachipy")
   mode <- switch(mode,
-    "A" = tokenizer$Tokenizer$SplitMode$A,
-    "B" = tokenizer$Tokenizer$SplitMode$B,
-    "C" = tokenizer$Tokenizer$SplitMode$C
+    "A" = sudachi$SplitMode$A,
+    "B" = sudachi$SplitMode$B,
+    "C" = sudachi$SplitMode$C
   )
-  dictionary <- reticulate::import("sudachipy.dictionary")
   if (!is.null(config_path)) {
-    dictionary$Dictionary(config_path = file.path(config_path))$create(mode)
+    sudachi$dictionary$Dictionary(config_path = file.path(config_path))$create(mode)
   } else {
-    dictionary$Dictionary(dict_type = dict_type)$create(mode)
+    sudachi$dictionary$Dictionary(dict_type = dict_type)$create(mode)
   }
 }
 
