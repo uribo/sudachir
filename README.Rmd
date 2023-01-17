@@ -42,36 +42,83 @@ remotes::install_github("uribo/sudachir")
 
 ## Usage
 
+### Set up 'r-sudachipy' environment
+
+`{sudachir}` works with [sudachipy](https://github.com/WorksApplications/sudachi.rs/tree/develop/python)  (>= 0.6.\*) via the [reticulate](https://github.com/rstudio/reticulate/) package.
+
+To get started, it requires a Python environment that has sudachipy and its dictionaries already installed and available.
+
+This package provides a function `install_sudachipy` which helps users prepare a Python virtual environment. The desired modules (`sudachipy`, `sudachidict_core`, `pandas`) can be installed with this function, but can also be installed manually.
+
 ```{r}
 library(reticulate)
 library(sudachir)
-```
 
-### Setup r-sudachipy environment
+if (!virtualenv_exists("r-sudachipy")) {
+  install_sudachipy()
+}
 
-``` r
-install_sudachipy()
-```
-
-```{r}
 use_virtualenv("r-sudachipy", required = TRUE)
 ```
 
-### Tokenize
+### Tokenize sentences
+
+Use `tokenize_to_df` for tokenization.
 
 ```{r}
 txt <- c(
-  "国家公務員はかつ丼を食べたい",
-  "メロスは激怒した。",
-  "吾輩は猫である。"
+  "国家公務員は鳴門海峡に行きたい",
+  "吾輩は猫である。\n名前はまだない。"
 )
-(ret <- tokenize_to_df(txt, mode = "C"))
+tokenize_to_df(txt)
 ```
 
+You can control which dictionary features are parsed using the `col_select` argument.
 
 ```{r}
-form(txt, type = "surface", pos = TRUE)
-form(txt, type = "normalized", pos = FALSE)
-form(txt, type = "dictionary", pos = FALSE)
-form(txt, type = "reading", pos = FALSE)
+tokenize_to_df(txt, col_select = 1:3) |>
+  dplyr::glimpse()
+
+tokenize_to_df(
+  txt, 
+  into = dict_features("en"),
+  col_select = c("POS1", "POS2")
+) |>
+  dplyr::glimpse()
+```
+
+The `as_phrase` function can tidy up tokens and the first part-of-speech informations into a list of named tokens. Also, you can use the `form` function as a shorthand of `tokenize_to_df(txt) |> as_phrase()`.
+
+```{r}
+tokenize_to_df(txt) |> as_phrase(type = "surface")
+
+form(txt, type = "surface")
+form(txt, type = "normalized")
+form(txt, type = "dictionary")
+form(txt, type = "reading")
+
+# This is the fastest equivalent if no part-of-speech features is needed at all.
+as_tokens(txt) |> as_phrase("surface", pos = FALSE)
+```
+
+### Change split mode
+
+```{r}
+tokenize_to_df(txt, mode = "B") |>
+  as_phrase("surface", pos = FALSE)
+
+tokenize_to_df(txt, mode = "A") |>
+  as_phrase("surface", pos = FALSE)
+```
+
+### Change dictionary edition
+
+You can touch dictionary options using the `rebuild_tokenizer` function.
+
+```{r}
+if (py_module_available("sudachidict_full")) {
+  tokenizer_full <- rebuild_tokenizer(mode = "C", dict_type = "full")
+  tokenize_to_df(txt, instance = tokenizer_full) |>
+    as_phrase("surface", pos = FALSE)
+}
 ```
