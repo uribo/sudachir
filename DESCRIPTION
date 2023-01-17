@@ -1,7 +1,7 @@
 Type: Package
 Package: sudachir
 Title: R Interface to 'Sudachi'
-Version: 0.1.0.9004
+Version: 0.1.0.9005
 Authors@R: c(
     person("Shinya", "Uryu", , "suika1127@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0493-6186")),

@@ -21,7 +21,7 @@ test_that("tokenize works", {
       instance = tokenizer
     )
   expect_equal(res[["doc_id"]], c("a", "b"))
-  expect_equal(dim(res), c(2, 12))
+  expect_equal(dim(res), c(2, 13))
 
   res <-
     tokenize_to_df(
@@ -31,5 +31,5 @@ test_that("tokenize works", {
       instance = tokenizer
     )
   expect_equal(res[["doc_id"]], c(1, 2))
-  expect_equal(dim(res), c(2, 9))
+  expect_equal(dim(res), c(2, 10))
 })

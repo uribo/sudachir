@@ -17,6 +17,7 @@ def tokenize_to_pd(docs, text_field, docid_field, instance):
   """
 
   doc_id = []
+  sentence_id = []
   token_id = []
   surface = []
   dict_form = []
@@ -29,10 +30,11 @@ def tokenize_to_pd(docs, text_field, docid_field, instance):
     docname = docs.get(docid_field)[i]
     morphemes = instance.tokenize("");
     tid = 1
-    for text in filter(None, texts):
+    for j, text in enumerate(filter(None, texts)):
       instance.tokenize(text, out = morphemes);
       for m in morphemes:
         doc_id.append(docname)
+        sentence_id.append(j)
         token_id.append(tid)
         surface.append(m.surface())
         dict_form.append(m.dictionary_form())
@@ -44,6 +46,7 @@ def tokenize_to_pd(docs, text_field, docid_field, instance):
 
   return(pd.DataFrame({
     "doc_id": doc_id,
+    "sentence_id": sentence_id,
     "token_id": token_id,
     "surface": surface,
     "dictionary_form": dict_form,

@@ -72,29 +72,30 @@ txt <- c(
   "吾輩は猫である。\n名前はまだない。"
 )
 tokenize_to_df(txt)
-#> # A tibble: 18 × 12
-#>    doc_id token…¹ surface dicti…² norma…³ readi…⁴ 品詞1 品詞2 品詞3 品詞4 活用型
-#>     <dbl>   <dbl> <chr>   <chr>   <chr>   <chr>   <chr> <chr> <chr> <chr> <chr> 
-#>  1      1       1 国家公… 国家公… 国家公… コッカ… 名詞  普通… 一般  <NA>  <NA>  
-#>  2      1       2 は      は      は      ハ      助詞  係助… <NA>  <NA>  <NA>  
-#>  3      1       3 鳴門    鳴門    鳴門    ナルト  名詞  固有… 地名  一般  <NA>  
-#>  4      1       4 海峡    海峡    海峡    カイキ… 名詞  普通… 一般  <NA>  <NA>  
-#>  5      1       5 に      に      に      ニ      助詞  格助… <NA>  <NA>  <NA>  
-#>  6      1       6 行き    行く    行く    イキ    動詞  非自… <NA>  <NA>  五段-…
-#>  7      1       7 たい    たい    たい    タイ    助動… <NA>  <NA>  <NA>  助動… 
-#>  8      2       1 吾輩    吾輩    我が輩  ワガハ… 代名… <NA>  <NA>  <NA>  <NA>  
-#>  9      2       2 は      は      は      ハ      助詞  係助… <NA>  <NA>  <NA>  
-#> 10      2       3 猫      猫      猫      ネコ    名詞  普通… 一般  <NA>  <NA>  
-#> 11      2       4 で      だ      だ      デ      助動… <NA>  <NA>  <NA>  助動… 
-#> 12      2       5 ある    ある    有る    アル    動詞  非自… <NA>  <NA>  五段-…
-#> 13      2       6 。      。      。      。      補助… 句点  <NA>  <NA>  <NA>  
-#> 14      2       1 名前    名前    名前    ナマエ  名詞  普通… 一般  <NA>  <NA>  
-#> 15      2       2 は      は      は      ハ      助詞  係助… <NA>  <NA>  <NA>  
-#> 16      2       3 まだ    まだ    未だ    マダ    副詞  <NA>  <NA>  <NA>  <NA>  
-#> 17      2       4 ない    ない    無い    ナイ    形容… 非自… <NA>  <NA>  形容詞
-#> 18      2       5 。      。      。      。      補助… 句点  <NA>  <NA>  <NA>  
-#> # … with 1 more variable: 活用形 <chr>, and abbreviated variable names
-#> #   ¹​token_id, ²​dictionary_form, ³​normalized_form, ⁴​reading_form
+#> # A tibble: 18 × 13
+#>    doc_id sentence_id token_id surface dicti…¹ norma…² readi…³ 品詞1 品詞2 品詞3
+#>     <dbl>       <dbl>    <dbl> <chr>   <chr>   <chr>   <chr>   <chr> <chr> <chr>
+#>  1      1           1        1 国家公… 国家公… 国家公… コッカ… 名詞  普通… 一般 
+#>  2      1           1        2 は      は      は      ハ      助詞  係助… <NA> 
+#>  3      1           1        3 鳴門    鳴門    鳴門    ナルト  名詞  固有… 地名 
+#>  4      1           1        4 海峡    海峡    海峡    カイキ… 名詞  普通… 一般 
+#>  5      1           1        5 に      に      に      ニ      助詞  格助… <NA> 
+#>  6      1           1        6 行き    行く    行く    イキ    動詞  非自… <NA> 
+#>  7      1           1        7 たい    たい    たい    タイ    助動… <NA>  <NA> 
+#>  8      2           1        1 吾輩    吾輩    我が輩  ワガハ… 代名… <NA>  <NA> 
+#>  9      2           1        2 は      は      は      ハ      助詞  係助… <NA> 
+#> 10      2           1        3 猫      猫      猫      ネコ    名詞  普通… 一般 
+#> 11      2           1        4 で      だ      だ      デ      助動… <NA>  <NA> 
+#> 12      2           1        5 ある    ある    有る    アル    動詞  非自… <NA> 
+#> 13      2           1        6 。      。      。      。      補助… 句点  <NA> 
+#> 14      2           2        1 名前    名前    名前    ナマエ  名詞  普通… 一般 
+#> 15      2           2        2 は      は      は      ハ      助詞  係助… <NA> 
+#> 16      2           2        3 まだ    まだ    未だ    マダ    副詞  <NA>  <NA> 
+#> 17      2           2        4 ない    ない    無い    ナイ    形容… 非自… <NA> 
+#> 18      2           2        5 。      。      。      。      補助… 句点  <NA> 
+#> # … with 3 more variables: 品詞4 <chr>, 活用型 <chr>, 活用形 <chr>, and
+#> #   abbreviated variable names ¹​dictionary_form, ²​normalized_form,
+#> #   ³​reading_form
 ```
 
 You can control which dictionary features are parsed using the
@@ -104,8 +105,9 @@ You can control which dictionary features are parsed using the
 tokenize_to_df(txt, col_select = 1:3) |>
   dplyr::glimpse()
 #> Rows: 18
-#> Columns: 9
+#> Columns: 10
 #> $ doc_id          <dbl> 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
+#> $ sentence_id     <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2
 #> $ token_id        <dbl> 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5
 #> $ surface         <chr> "国家公務員", "は", "鳴門", "海峡", "に", "行き", "た…
 #> $ dictionary_form <chr> "国家公務員", "は", "鳴門", "海峡", "に", "行く", "た…
@@ -122,8 +124,9 @@ tokenize_to_df(
 ) |>
   dplyr::glimpse()
 #> Rows: 18
-#> Columns: 8
+#> Columns: 9
 #> $ doc_id          <dbl> 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
+#> $ sentence_id     <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2
 #> $ token_id        <dbl> 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5
 #> $ surface         <chr> "国家公務員", "は", "鳴門", "海峡", "に", "行き", "た…
 #> $ dictionary_form <chr> "国家公務員", "は", "鳴門", "海峡", "に", "行く", "た…

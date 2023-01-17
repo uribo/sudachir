@@ -28,7 +28,7 @@ as_phrase <- function(tbl, type, pos = TRUE, ...) {
       )
     )
   if (type == "part_of_speech") {
-    rlang::abort("`type=\"part_of_speech\"` is defuncted.")
+    rlang::abort("`type=\"part_of_speech\"` is now defunct.")
   }
 
   fn <-

@@ -23,9 +23,9 @@ rebuild_tokenizer <- function(mode = c("C", "B", "A"),
     "C" = sudachi$SplitMode$C
   )
   if (!is.null(config_path)) {
-    sudachi$dictionary$Dictionary(config_path = file.path(config_path))$create(mode)
+    sudachi$Dictionary(config_path = file.path(config_path))$create(mode)
   } else {
-    sudachi$dictionary$Dictionary(dict_type = dict_type)$create(mode)
+    sudachi$Dictionary(dict_type = dict_type)$create(mode)
   }
 }
 
@@ -64,6 +64,7 @@ as_tokens <- function(sentence,
     instance = instance
   ) %>%
     reticulate::py_to_r() %>%
+    dplyr::mutate(sentence_id = .data$sentence_id + 1) %>%
     dplyr::as_tibble()
 }
 
