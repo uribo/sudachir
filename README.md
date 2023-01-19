@@ -25,7 +25,7 @@ You can install the released version of `{sudachir}` from CRAN with:
 install.packages("sudachir")
 ```
 
-and also, the developmment version from GitHub
+and also, the developmment version from GitHub.
 
 ``` r
 if (!requireNamespace("remotes"))
@@ -71,7 +71,7 @@ txt <- c(
   "国家公務員は鳴門海峡に行きたい",
   "吾輩は猫である。\n名前はまだない。"
 )
-tokenize_to_df(txt)
+tokenize_to_df(data.frame(doc_id = c(1, 2), text = txt))
 #> # A tibble: 18 × 13
 #>    doc_id sentence_id token_id surface dicti…¹ norma…² readi…³ 品詞1 品詞2 品詞3
 #>     <dbl>       <dbl>    <dbl> <chr>   <chr>   <chr>   <chr>   <chr> <chr> <chr>
@@ -136,12 +136,12 @@ tokenize_to_df(
 #> $ POS2            <chr> "普通名詞", "係助詞", "固有名詞", "普通名詞", "格助詞"…
 ```
 
-The `as_phrase` function can tidy up tokens and the first part-of-speech
+The `as_tokens` function can tidy up tokens and the first part-of-speech
 informations into a list of named tokens. Also, you can use the `form`
-function as a shorthand of `tokenize_to_df(txt) |> as_phrase()`.
+function as a shorthand of `tokenize_to_df(txt) |> as_tokens()`.
 
 ``` r
-tokenize_to_df(txt) |> as_phrase(type = "surface")
+tokenize_to_df(txt) |> as_tokens(type = "surface")
 #> $`1`
 #>         名詞         助詞         名詞         名詞         助詞         動詞 
 #> "国家公務員"         "は"       "鳴門"       "海峡"         "に"       "行き" 
@@ -202,23 +202,13 @@ form(txt, type = "reading")
 #> "ワガハイ"       "ハ"     "ネコ"       "デ"     "アル"       "。"   "ナマエ" 
 #>       助詞       副詞     形容詞   補助記号 
 #>       "ハ"     "マダ"     "ナイ"       "。"
-
-# This is the fastest equivalent if no part-of-speech features is needed at all.
-as_tokens(txt) |> as_phrase("surface", pos = FALSE)
-#> $`1`
-#> [1] "国家公務員" "は"         "鳴門"       "海峡"       "に"        
-#> [6] "行き"       "たい"      
-#> 
-#> $`2`
-#>  [1] "吾輩" "は"   "猫"   "で"   "ある" "。"   "名前" "は"   "まだ" "ない"
-#> [11] "。"
 ```
 
 ### Change split mode
 
 ``` r
-tokenize_to_df(txt, mode = "B") |>
-  as_phrase("surface", pos = FALSE)
+tokenize_to_df(txt, instance = rebuild_tokenizer("B")) |>
+  as_tokens("surface", pos = FALSE)
 #> $`1`
 #> [1] "国家"   "公務員" "は"     "鳴門"   "海峡"   "に"     "行き"   "たい"  
 #> 
@@ -226,8 +216,8 @@ tokenize_to_df(txt, mode = "B") |>
 #>  [1] "吾輩" "は"   "猫"   "で"   "ある" "。"   "名前" "は"   "まだ" "ない"
 #> [11] "。"
 
-tokenize_to_df(txt, mode = "A") |>
-  as_phrase("surface", pos = FALSE)
+tokenize_to_df(txt, instance = rebuild_tokenizer("A")) |>
+  as_tokens("surface", pos = FALSE)
 #> $`1`
 #> [1] "国家" "公務" "員"   "は"   "鳴門" "海峡" "に"   "行き" "たい"
 #> 
@@ -244,7 +234,7 @@ You can touch dictionary options using the `rebuild_tokenizer` function.
 if (py_module_available("sudachidict_full")) {
   tokenizer_full <- rebuild_tokenizer(mode = "C", dict_type = "full")
   tokenize_to_df(txt, instance = tokenizer_full) |>
-    as_phrase("surface", pos = FALSE)
+    as_tokens("surface", pos = FALSE)
 }
 #> $`1`
 #> [1] "国家公務員" "は"         "鳴門海峡"   "に"         "行き"      

@@ -3,7 +3,7 @@
 \name{sudachir-defunct}
 \alias{sudachir-defunct}
 \alias{tokenizer}
-\title{Sudachi tokenizer}
+\title{'Sudachi' tokenizer}
 \usage{
 tokenizer(...)
 }
@@ -16,6 +16,6 @@ The old \code{tokenizer()} function was removed.
 \details{
 In general, users should not directly touch
 the \verb{<sudachipy.tokenizer.Tokenizer>} and its \code{MorphemeList} objects.
-If you particularly want to access those objects,
-use the returned value of \code{rebuild_tokenizer()} function.
+If you must access those objects,
+use the return value of the \code{rebuild_tokenizer()} function.
 }

@@ -2,28 +2,30 @@
 % Please edit documentation in R/as_tokens.R
 \name{as_tokens}
 \alias{as_tokens}
-\title{Call 'Sudachi' tokenizer}
+\title{Create a list of tokens}
 \usage{
-as_tokens(
-  sentence,
-  doc_id = seq_along(sentence),
-  instance = rebuild_tokenizer()
-)
+as_tokens(tbl, type, pos = TRUE, ...)
 }
 \arguments{
-\item{sentence}{Input text vectors.}
+\item{tbl}{A data.frame of tokens out of \code{tokenize_to_df()}.}
 
-\item{doc_id}{Identifier of input sentences.}
+\item{type}{Preference for the format of returned tokens.
+Pick one of "surface", "dictionary", "normalized", or "reading".}
 
-\item{instance}{This is optional; if you already have an instance of
-\verb{<sudachipy.tokenizer.Tokenizer>}, supplying the predefined
-instance would improve the performance.}
+\item{pos}{When passed as \code{TRUE}, this function
+uses the part-of-speech information as the name of the returned tokens.}
+
+\item{...}{Passed to \code{dict_features()}.}
+}
+\value{
+A named list of character vectors.
 }
 \description{
-Call 'Sudachi' tokenizer
+Create a list of tokens
 }
 \examples{
 \dontrun{
-as_tokens("Tokyo, Japan")
+tokenize_to_df("Tokyo, Japan") |>
+  as_tokens(type = "surface")
 }
 }

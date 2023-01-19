@@ -9,7 +9,7 @@ test_that("form works", {
 
   tokenizer <- rebuild_tokenizer(dict_type = "core")
 
-  surface <- form("Tokyo", doc_id = "test", type = "surface", instance = tokenizer)
+  surface <- form(c(test = "Tokyo"), type = "surface", instance = tokenizer)
   expect_named(surface, "test")
   expect_named(surface[[1]], enc2utf8("\u540d\u8a5e"))
   expect_equal(unname(surface[[1]]), "Tokyo")
