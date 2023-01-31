@@ -26,6 +26,6 @@ Rebuild 'Sudachi' tokenizer
 \examples{
 \dontrun{
 tokenizer <- rebuild_tokenizer()
-as_tokens("Tokyo, Japan", instance = tokenizer)
+tokenize_to_df("Tokyo, Japan", instance = tokenizer)
 }
 }

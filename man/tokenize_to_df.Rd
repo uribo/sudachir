@@ -44,7 +44,7 @@ Create a data.frame of tokens
 tokenize_to_df(
   "Tokyo, Japan",
   into = dict_features("en"),
-  col_select = c("POS1", "POS2")
+  col_select = c("pos1", "pos2")
 )
 }
 }

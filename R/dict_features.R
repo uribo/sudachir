@@ -12,8 +12,8 @@ dict_features <- function(lang = c("ja", "en")) {
       intToUtf8(c(27963, 29992, 24418))
     ),
     "en" = c(
-      "POS1", "POS2", "POS3", "POS4",
-      "X5StageUse1", "X5StageUse2"
+      "pos1", "pos2", "pos3", "pos4",
+      "cType", "cForm"
     )
   )
 }
