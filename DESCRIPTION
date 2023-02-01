@@ -1,37 +1,30 @@
-Package: sudachir
 Type: Package
+Package: sudachir
 Title: R Interface to 'Sudachi'
-Version: 0.1.0.9000
+Version: 0.1.0.9007
 Authors@R: c(
-    person(given = "Shinya",
-           family = "Uryu",
-           role = c("aut", "cre"),
-           email = "suika1127@gmail.com",
+    person("Shinya", "Uryu", , "suika1127@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0493-6186")),
-    person(given = "Akiru",
-           family = "Kato",
-           role = "aut"))
+    person("Akiru", "Kato", role = "aut")
+  )
 Maintainer: Shinya Uryu <suika1127@gmail.com>
-Description: Interface to 'Sudachi' <https://github.com/WorksApplications/Sudachi>,
-    a Japanese morphological analyzer. This is a port of what is available in Python.
+Description: Interface to 'Sudachi'
+    <https://github.com/WorksApplications/sudachi.rs>, a Japanese
+    morphological analyzer. This is a port of what is available in Python.
 License: Apache License (>= 2.0)
-Encoding: UTF-8
-SystemRequirements: Python (>= 2.7.0)
 URL: https://github.com/uribo/sudachir
 BugReports: https://github.com/uribo/sudachir/issues
 Imports:
-    cli (>= 2.1.0),
-    dplyr (>= 1.0.2),
-    glue (>= 1.4.2),
-    magrittr (>= 1.5),
-    purrr (>= 0.3.4),
-    rlang (>= 0.4.8),
-    reticulate (>= 1.17),
-    tibble (>= 3.0.4),
-    tidyselect (>= 1.1.0)
-LazyData: true
-RoxygenNote: 7.1.2
-Roxygen: list(markdown = TRUE)
+    audubon (>= 0.4.0),
+    cli,
+    dplyr,
+    reticulate,
+    rlang (>= 0.4.11),
+    rstudioapi
 Suggests: 
-    rstudioapi,
+    roxygen2,
     testthat
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+SystemRequirements: Python (>= 3.6)

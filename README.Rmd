@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 # sudachir <a href='https://uribo.github.io/sudachir/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
-SudachiR is a R version of [Sudachi](https://github.com/WorksApplications/Sudachi), a Japanese morphological analyzer.
+SudachiR is an R version of [Sudachi](https://github.com/WorksApplications/sudachi.rs), a Japanese morphological analyzer.
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/sudachir)](https://CRAN.R-project.org/package=sudachir)
@@ -31,7 +31,7 @@ You can install the released version of `{sudachir}` from CRAN with:
 install.packages("sudachir")
 ```
 
-and also, the developmment version from GitHub
+and also, the developmment version from GitHub.
 
 ``` r
 if (!requireNamespace("remotes"))
@@ -42,58 +42,80 @@ remotes::install_github("uribo/sudachir")
 
 ## Usage
 
+### Set up 'r-sudachipy' environment
+
+`{sudachir}` works with [sudachipy](https://github.com/WorksApplications/sudachi.rs/tree/develop/python)  (>= 0.6.\*) via the [reticulate](https://github.com/rstudio/reticulate/) package.
+
+To get started, it requires a Python environment that has sudachipy and its dictionaries already installed and available.
+
+This package provides a function `install_sudachipy` which helps users prepare a Python virtual environment. The desired modules (`sudachipy`, `sudachidict_core`, `pandas`) can be installed with this function, but can also be installed manually.
+
 ```{r}
 library(reticulate)
 library(sudachir)
-```
 
-### Setup r-sudachipy environment
+if (!virtualenv_exists("r-sudachipy")) {
+  install_sudachipy()
+}
 
-``` r
-install_sudachipy()
-```
-
-```{r}
 use_virtualenv("r-sudachipy", required = TRUE)
 ```
 
-### Tokenize
+### Tokenize sentences
+
+Use `tokenize_to_df` for tokenization.
 
 ```{r}
-m <- 
-  tokenizer("高輪ゲートウェイ駅", mode = "A")
-
-for (i in seq_len(py_len(m[[1]])) - 1) {
-  print(m[[1]][i])
-}
-
-m <- 
-  tokenizer("高輪ゲートウェイ駅", mode = "C")
-
-for (i in seq_len(py_len(m[[1]])) - 1) {
-  print(m[[1]][i])
-}
+txt <- c(
+  "国家公務員は鳴門海峡に行きたい",
+  "吾輩は猫である。\n名前はまだない。"
+)
+tokenize_to_df(data.frame(doc_id = c(1, 2), text = txt))
 ```
 
+You can control which dictionary features are parsed using the `col_select` argument.
 
 ```{r}
-txt <- c("国家公務員はかつ丼を食べたい", 
-         "メロスは激怒した。",
-         "吾輩は猫である。")
+tokenize_to_df(txt, col_select = 1:3) |>
+  dplyr::glimpse()
 
-tokenize_to_df(txt, mode = "C")
+tokenize_to_df(
+  txt, 
+  into = dict_features("en"),
+  col_select = c("pos1", "pos2")
+) |>
+  dplyr::glimpse()
 ```
 
+The `as_tokens` function can tidy up tokens and the first part-of-speech informations into a list of named tokens. Also, you can use the `form` function as a shorthand of `tokenize_to_df(txt) |> as_tokens()`.
 
 ```{r}
-form("東京都へ行く", mode = "B", type = "dictionary")
+tokenize_to_df(txt) |> as_tokens(type = "surface")
 
-form("国家公務員はかつ丼を食べたい", mode = "C", type = "normalized", pos = TRUE)
+form(txt, type = "surface")
+form(txt, type = "normalized")
+form(txt, type = "dictionary")
+form(txt, type = "reading")
+```
 
-form(txt, mode = "A", type = "dictionary", pos = FALSE)
+### Change split mode
 
-form("メロスは激怒した", mode = "A", type = "normalized", pos = FALSE)
-form("メロスは激怒した", mode = "A", type = "dictionary", pos = FALSE)
-form("メロスは激怒した", mode = "A", type = "reading", pos = FALSE)
-form("メロスは激怒した", mode = "A", type = "part_of_speech", pos = FALSE)
+```{r}
+tokenize_to_df(txt, instance = rebuild_tokenizer("B")) |>
+  as_tokens("surface", pos = FALSE)
+
+tokenize_to_df(txt, instance = rebuild_tokenizer("A")) |>
+  as_tokens("surface", pos = FALSE)
+```
+
+### Change dictionary edition
+
+You can touch dictionary options using the `rebuild_tokenizer` function.
+
+```{r}
+if (py_module_available("sudachidict_full")) {
+  tokenizer_full <- rebuild_tokenizer(mode = "C", dict_type = "full")
+  tokenize_to_df(txt, instance = tokenizer_full) |>
+    as_tokens("surface", pos = FALSE)
+}
 ```
